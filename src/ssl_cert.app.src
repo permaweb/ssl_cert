@@ -9,7 +9,7 @@
     public_key,
     ssl,
     inets,
-    jsx
+    gun
    ]},
   {env,[]},
   {modules, [
@@ -25,6 +25,5 @@
     ssl_cert_validation,
     ssl_utils
   ]},
-  {licenses, ["Apache-2.0"]},
-  {links, [{"GitHub", "https://github.com/your-org/ssl_cert"}]}
+  {links, [{"GitHub", "https://github.com/permaweb/ssl_cert"}]}
  ]}.
