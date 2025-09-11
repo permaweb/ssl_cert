@@ -193,6 +193,8 @@ http_request(Method, Url, Headers, Body) ->
         {Transport, DefaultPort} = case Scheme of
             "https" -> {tls, 443};
             "http" -> {tcp, 80};
+            <<"https">> -> {tls, 443};
+            <<"http">> -> {tcp, 80};
             https -> {tls, 443};
             http -> {tcp, 80}
         end,
