@@ -152,26 +152,38 @@ normalize_email(_) ->
 
 %% @doc Makes an HTTP POST request using gun.
 %%
-%% @param Url The target URL
+%% @param Url The target URL (string or binary)
 %% @param Headers List of header tuples
 %% @param Body Request body as binary
 %% @returns {ok, StatusCode, ResponseHeaders, ResponseBody} | {error, Reason}
 http_post(Url, Headers, Body) ->
-    http_request(post, Url, Headers, Body).
+    UrlStr = case Url of
+        U when is_binary(U) -> binary_to_list(U);
+        U when is_list(U) -> U
+    end,
+    http_request(post, UrlStr, Headers, Body).
 
 %% @doc Makes an HTTP GET request using gun.
 %%
-%% @param Url The target URL  
+%% @param Url The target URL (string or binary)
 %% @returns {ok, StatusCode, ResponseHeaders, ResponseBody} | {error, Reason}
 http_get(Url) ->
-    http_request(get, Url, [], <<>>).
+    UrlStr = case Url of
+        U when is_binary(U) -> binary_to_list(U);
+        U when is_list(U) -> U
+    end,
+    http_request(get, UrlStr, [], <<>>).
 
 %% @doc Makes an HTTP HEAD request using gun.
 %%
-%% @param Url The target URL
+%% @param Url The target URL (string or binary)
 %% @returns {ok, StatusCode, ResponseHeaders, ResponseBody} | {error, Reason}  
 http_head(Url) ->
-    http_request(head, Url, [], <<>>).
+    UrlStr = case Url of
+        U when is_binary(U) -> binary_to_list(U);
+        U when is_list(U) -> U
+    end,
+    http_request(head, UrlStr, [], <<>>).
 
 %% @doc Internal function to make HTTP requests using gun.
 %%
