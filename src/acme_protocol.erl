@@ -10,6 +10,7 @@
 -module(acme_protocol).
 
 -include("../include/ssl_cert.hrl").
+-include("../include/events.hrl").
 
 %% Public API
 -export([

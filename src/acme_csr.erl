@@ -11,7 +11,7 @@
 -module(acme_csr).
 
 -include_lib("public_key/include/public_key.hrl").
--include("../include/ssl_cert.hrl").
+-include("../include/events.hrl").
 
 %% Public API
 -export([

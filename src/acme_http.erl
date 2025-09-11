@@ -6,7 +6,7 @@
 %%% and response processing required for secure communication with ACME servers.
 -module(acme_http).
 
--include("../include/ssl_cert.hrl").
+-include("../include/events.hrl").
 
 %% Public API
 -export([

@@ -9,6 +9,7 @@
 -module(ssl_cert_ops).
 
 -include("../include/ssl_cert.hrl").
+-include("../include/events.hrl").
 
 %% Public API
 -export([

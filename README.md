@@ -108,7 +108,3 @@ ProductionConfig = #{
 - `public_key` - Public key operations
 - `ssl` - SSL/TLS support
 - `inets` - Additional HTTP utilities
-
-## License
-
-Apache-2.0
