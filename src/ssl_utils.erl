@@ -274,7 +274,7 @@ list(Value) when is_atom(Value) -> atom_to_list(Value).
 
 %% @doc Encode a value to a JSON string.
 json_encode(Value) ->
-    iolist_to_binary(json:encode(Value)).
+    json:encode(Value).
 
 %% @doc Decode a JSON string to a value.
 json_decode(Value) ->
