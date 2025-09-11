@@ -42,6 +42,11 @@
 -spec http_post(string(), [tuple()], binary()) -> {ok, integer(), [tuple()], binary()} | {error, term()}.
 -spec http_get(string()) -> {ok, integer(), [tuple()], binary()} | {error, term()}.
 -spec http_head(string()) -> {ok, integer(), [tuple()], binary()} | {error, term()}.
+-spec bin(term()) -> binary().
+-spec list(term()) -> list().
+-spec json_encode(term()) -> binary().
+-spec json_decode(binary()) -> term().
+-spec json_decode(binary(), term()) -> term().
 
 %% @doc Formats error details for user-friendly display.
 %%

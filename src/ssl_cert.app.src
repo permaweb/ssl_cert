@@ -12,18 +12,6 @@
     gun
    ]},
   {env,[]},
-  {modules, [
-    acme_client,
-    acme_crypto,
-    acme_csr,
-    acme_http,
-    acme_protocol,
-    acme_url,
-    ssl_cert_challenge,
-    ssl_cert_ops,
-    ssl_cert_state,
-    ssl_cert_validation,
-    ssl_utils
-  ]},
+  {modules, []},
   {links, [{"GitHub", "https://github.com/permaweb/ssl_cert"}]}
  ]}.

@@ -31,6 +31,7 @@
 -spec poll_order_until_valid(acme_account(), request_state(), integer()) -> 
     {valid | processing, request_state()} | {error, term()}.
 -spec format_challenges_for_response([map()]) -> [map()].
+-spec extract_challenge_info(map() | dns_challenge()) -> {string(), dns_challenge()}.
 
 %% @doc Validates DNS challenges and manages the complete validation workflow.
 %%
