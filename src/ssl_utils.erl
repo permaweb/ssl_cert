@@ -224,11 +224,11 @@ http_request(Method, Url, Headers, Body) ->
                         % Wait for response
                         Result = case gun:await(ConnPid, StreamRef, 10000) of
                             {response, fin, StatusCode, ResponseHeaders} ->
-                                {ok, StatusCode, maps:to_list(ResponseHeaders), <<>>};
+                                {ok, StatusCode, ResponseHeaders, <<>>};
                             {response, nofin, StatusCode, ResponseHeaders} ->
                                 case gun:await_body(ConnPid, StreamRef, 10000) of
                                     {ok, ResponseBody} ->
-                                        {ok, StatusCode, maps:to_list(ResponseHeaders), ResponseBody};
+                                        {ok, StatusCode, ResponseHeaders, ResponseBody};
                                     {error, Reason} ->
                                         {error, {body_error, Reason}}
                                 end;
