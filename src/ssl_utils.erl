@@ -28,7 +28,8 @@
     bin/1,
     list/1,
     json_encode/1,
-    json_decode/1
+    json_decode/1,
+    json_decode/2
 ]).
 
 %% Type specifications
@@ -272,10 +273,10 @@ list(Value) when is_binary(Value) ->
 list(Value) when is_list(Value) -> Value;
 list(Value) when is_atom(Value) -> atom_to_list(Value).
 
-%% @doc Encode a value to a JSON string.
-json_encode(Value) ->
-    json:encode(Value).
+%% @doc Takes a term in Erlang's native form and encodes it as a JSON string.
+json_encode(Term) ->
+    iolist_to_binary(json:encode(Term)).
 
-%% @doc Decode a JSON string to a value.
-json_decode(Value) ->
-    json:decode(Value).
+%% @doc Takes a JSON string and decodes it into an Erlang term.
+json_decode(Bin) -> json:decode(Bin).
+json_decode(Bin, _Opts) -> json_decode(Bin).
