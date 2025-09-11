@@ -1,0 +1,30 @@
+{application, ssl_cert,
+ [{description, "SSL Certificate Management Library with Let's Encrypt ACME support"},
+  {vsn, "1.0.0"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib,
+    crypto,
+    public_key,
+    ssl,
+    inets,
+    jsx
+   ]},
+  {env,[]},
+  {modules, [
+    acme_client,
+    acme_crypto,
+    acme_csr,
+    acme_http,
+    acme_protocol,
+    acme_url,
+    ssl_cert_challenge,
+    ssl_cert_ops,
+    ssl_cert_state,
+    ssl_cert_validation,
+    ssl_utils
+  ]},
+  {licenses, ["Apache-2.0"]},
+  {links, [{"GitHub", "https://github.com/your-org/ssl_cert"}]}
+ ]}.
