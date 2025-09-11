@@ -83,16 +83,16 @@ download_certificate_state(State, _Opts) ->
 %% 4. Creates and returns the request state
 %%
 %% @param ValidatedParams Map of validated request parameters
-%% @param _Opts Configuration options
+%% @param Wallet Wallet record
 %% @returns {ok, Map} with request details or {error, Reason}
-process_certificate_request(ValidatedParams, Opts) ->
+process_certificate_request(ValidatedParams, Wallet) ->
     ?event(ssl_cert, {ssl_cert_processing_request, ValidatedParams}),
     maybe
         Domains = maps:get(domains, ValidatedParams),
-        {ok, Account} ?=
+        {ok, Account, CertificateKey} ?=
             (fun() ->
                 ?event(ssl_cert, {ssl_cert_account_creation_started}),
-                acme_client:create_account(ValidatedParams, Opts)
+                acme_client:create_account(ValidatedParams, Wallet)
             end)(),
         ?event(ssl_cert, {ssl_cert_account_created}),
         {ok, Order} ?=
@@ -115,7 +115,8 @@ process_certificate_request(ValidatedParams, Opts) ->
                 <<"request_state">> => RequestState,
                 <<"message">> => <<"Certificate request created. Use /challenges endpoint to get DNS records.">>,
                 <<"domains">> => [ssl_utils:bin(D) || D <- Domains],
-                <<"next_step">> => <<"challenges">>
+                <<"next_step">> => <<"challenges">>,
+                <<"certificate_key">> => CertificateKey
             }
         }}
     else
