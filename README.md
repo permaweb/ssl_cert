@@ -1,5 +1,9 @@
 # SSL Certificate Library
 
+[![Hex.pm](https://img.shields.io/hexpm/v/ssl_cert.svg?maxAge=2592000?style=plastic)](https://hex.pm/packages/ssl_cert)
+[![Hex.pm](https://img.shields.io/hexpm/dt/ssl_cert.svg?maxAge=2592000)](https://hex.pm/packages/ssl_cert)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/ssl_cert/)
+
 A comprehensive SSL certificate management library with Let's Encrypt ACME v2 support for Erlang/OTP applications.
 
 ## Index
