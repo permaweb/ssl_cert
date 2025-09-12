@@ -2,6 +2,16 @@
 
 A comprehensive SSL certificate management library with Let's Encrypt ACME v2 support for Erlang/OTP applications.
 
+## Index
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Modules](#modules)
+- [Dependencies](#dependencies)
+- [Code Coverage](#code-coverage)
+- [Development Commands](#development-commands)
+
 ## Features
 
 - Full ACME v2 protocol support
@@ -24,56 +34,121 @@ Add this library to your `rebar.config` dependencies:
 
 ## Usage
 
-### Basic Certificate Request
+### Device Configuration
+
+Configure the SSL certificate device with the required options:
 
 ```erlang
-%% Start the application dependencies
-application:ensure_all_started(ssl_cert).
-
-%% Create ACME account
-Config = #{
-    directory_url => "https://acme-staging-v02.api.letsencrypt.org/directory",
-    contact => ["mailto:admin@example.com"]
-},
-{ok, Account} = acme_client:create_account(Config, #{}),
-
-%% Request certificate for domains
-Domains = ["example.com", "www.example.com"],
-{ok, Order} = acme_client:request_certificate(Account, Domains),
-
-%% Get DNS challenge for validation
-{ok, Challenge} = acme_client:get_dns_challenge(Account, Order),
-
-%% After setting up DNS records, validate the challenge
-{ok, _} = acme_client:validate_challenge(Account, Challenge),
-
-%% Finalize order with CSR
-{ok, Csr} = acme_csr:generate_csr(Domains, #{}),
-{ok, FinalOrder} = acme_client:finalize_order(Account, Order, Csr),
-
-%% Download the certificate
-{ok, Certificate} = acme_client:download_certificate(Account, FinalOrder).
+%% Configuration for SSL certificate requests
+Opts = #{
+    <<"ssl_opts">> => #{
+        <<"domains">> => [<<"example.com">>, <<"www.example.com">>],
+        <<"email">> => <<"admin@example.com">>,
+        <<"environment">> => <<"staging">>  % Use "production" for live certificates
+    }
+}.
 ```
 
-### Certificate Operations
+### Certificate Request Workflow
 
+#### Step 1: Request Certificate
 ```erlang
-%% Process certificate request with full lifecycle
-RequestState = #{
-    account => Account,
-    order => Order,
-    domains => Domains
-},
-{ok, CertData} = ssl_cert_ops:process_certificate_request(RequestState, #{}),
+%% Initiate certificate request - returns DNS challenges
+{ok, Response} = dev_ssl_cert:request(undefined, undefined, Opts),
+#{<<"body">> := #{
+    <<"challenges">> := Challenges,
+    <<"message">> := <<"Create DNS TXT records for the following challenges, then call finalize">>
+}} = Response.
+```
 
+#### Step 2: Set DNS TXT Records
+Based on the returned challenges, create DNS TXT records:
+```
+_acme-challenge.example.com.     TXT "challenge_token_here"
+_acme-challenge.www.example.com. TXT "challenge_token_here"
+```
+
+#### Step 3: Finalize Certificate
+```erlang
+%% After DNS records are set, finalize the certificate
+{ok, FinalResponse} = dev_ssl_cert:finalize(undefined, undefined, Opts),
+#{<<"body">> := #{
+    <<"certificate_pem">> := CertPem,
+    <<"key_pem">> := KeyPem,
+    <<"domains">> := Domains
+}} = FinalResponse.
+```
+
+### Certificate Management
+
+#### Renew Certificate
+```erlang
 %% Renew existing certificate
-{ok, RenewedCert} = ssl_cert_ops:renew_certificate(Domains, #{account => Account}),
-
-%% Delete certificate
-{ok, _} = ssl_cert_ops:delete_certificate(Domains, #{}).
+RenewOpts = #{
+    <<"ssl_opts">> => #{
+        <<"domains">> => [<<"example.com">>, <<"www.example.com">>],
+        <<"email">> => <<"admin@example.com">>,
+        <<"environment">> => <<"production">>
+    }
+},
+{ok, RenewResponse} = dev_ssl_cert:renew(undefined, undefined, RenewOpts).
 ```
 
-## Main Modules
+#### Delete Certificate
+```erlang
+%% Delete stored certificate
+DeleteOpts = #{
+    <<"ssl_opts">> => #{
+        <<"domains">> => [<<"example.com">>, <<"www.example.com">>]
+    }
+},
+{ok, DeleteResponse} = dev_ssl_cert:delete(undefined, undefined, DeleteOpts).
+```
+
+### Environment Configuration
+
+#### Staging Environment (for testing)
+```erlang
+StagingOpts = #{
+    <<"ssl_opts">> => #{
+        <<"domains">> => [<<"test.example.com">>],
+        <<"email">> => <<"test@example.com">>,
+        <<"environment">> => <<"staging">>
+    }
+}.
+```
+
+#### Production Environment
+```erlang
+ProductionOpts = #{
+    <<"ssl_opts">> => #{
+        <<"domains">> => [<<"example.com">>],
+        <<"email">> => <<"admin@example.com">>,
+        <<"environment">> => <<"production">>
+    }
+}.
+```
+
+### Direct Module Usage
+
+For advanced use cases, you can call the underlying modules directly:
+
+```erlang
+%% Validate request parameters
+{ok, ValidatedParams} = ssl_cert_validation:validate_request_params(
+    [<<"example.com">>], <<"admin@example.com">>, <<"staging">>),
+
+%% Process certificate request
+{ok, ProcessResponse} = ssl_cert_ops:process_certificate_request(ValidatedParams, Wallet),
+
+%% Validate DNS challenges
+{ok, ValidationResponse} = ssl_cert_challenge:validate_dns_challenges_state(RequestState, PrivateKey),
+
+%% Generate CSR
+{ok, {CsrDer, PrivateKey}} = acme_csr:generate_csr([<<"example.com">>], #{}).
+```
+
+## Modules
 
 - **`acme_client`** - Main ACME client API
 - **`ssl_cert_ops`** - High-level certificate operations
@@ -85,22 +160,6 @@ RequestState = #{
 - **`ssl_cert_state`** - State management utilities
 - **`ssl_utils`** - Utility functions and HTTP client
 
-## Configuration
-
-The library supports both Let's Encrypt staging and production environments:
-
-```erlang
-%% Staging (for testing)
-StagingConfig = #{
-    directory_url => "https://acme-staging-v02.api.letsencrypt.org/directory"
-},
-
-%% Production
-ProductionConfig = #{
-    directory_url => "https://acme-v02.api.letsencrypt.org/directory"
-}.
-```
-
 ## Dependencies
 
 - `gun` - Modern HTTP/2 client for ACME communication
@@ -108,3 +167,90 @@ ProductionConfig = #{
 - `public_key` - Public key operations
 - `ssl` - SSL/TLS support
 - `inets` - Additional HTTP utilities
+
+## Code Coverage
+
+Current test coverage across all modules:
+
+| Module | Coverage |
+|--------|----------|
+| **Core Modules** | |
+| `acme_client` | 25% |
+| `acme_crypto` | 65% |
+| `acme_csr` | 81% |
+| `acme_http` | 49% |
+| `acme_protocol` | 26% |
+| `acme_url` | 100% |
+| `ssl_cert_challenge` | 18% |
+| `ssl_cert_ops` | 24% |
+| `ssl_cert_state` | 65% |
+| `ssl_cert_validation` | 95% |
+| `ssl_utils` | 29% |
+| **Test Modules** | |
+| `acme_client_tests` | 91% |
+| `acme_crypto_tests` | 100% |
+| `acme_csr_tests` | 91% |
+| `acme_http_tests` | 100% |
+| `acme_protocol_tests` | 91% |
+| `acme_url_tests` | 100% |
+| `ssl_cert_challenge_tests` | 100% |
+| `ssl_cert_integration_tests` | 100% |
+| `ssl_cert_ops_tests` | 100% |
+| `ssl_cert_state_tests` | 100% |
+| `ssl_cert_test_suite` | 10% |
+| `ssl_cert_validation_tests` | 100% |
+| `ssl_utils_tests` | 100% |
+| **Total Coverage** | **68%** |
+
+### Coverage Analysis
+
+- **High Coverage (80%+)**: `acme_csr`, `acme_url`, `ssl_cert_validation`
+- **Medium Coverage (50-79%)**: `acme_crypto`, `ssl_cert_state`
+- **Low Coverage (<50%)**: `acme_client`, `acme_http`, `acme_protocol`, `ssl_cert_challenge`, `ssl_cert_ops`, `ssl_utils`
+
+## Development Commands
+
+### Code Quality and Formatting
+```bash
+# Format all Erlang files
+rebar3 fmt
+
+# Check if files need formatting (don't modify)
+rebar3 fmt --check
+
+# Run linter to check code quality
+rebar3 lint
+```
+
+### Testing
+```bash
+# Compile and run all tests
+rebar3 as test eunit
+
+# Run specific test module
+rebar3 as test eunit --module=my_module_tests
+```
+
+### Code Coverage
+```bash
+# Run tests with coverage analysis
+rebar3 cover
+
+# Generate coverage reports
+rebar3 covertool generate
+
+# Full test and coverage workflow
+rebar3 as test eunit && rebar3 cover && rebar3 covertool generate
+```
+
+### Development Workflow
+```bash
+# Complete quality check before commit
+rebar3 clean
+rebar3 fmt --check
+rebar3 lint
+rebar3 as test compile
+rebar3 as test eunit
+rebar3 cover
+rebar3 covertool generate
+```

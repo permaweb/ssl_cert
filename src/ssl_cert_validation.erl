@@ -1,15 +1,18 @@
-%%% @doc SSL Certificate validation module.
-%%%
-%%% This module provides comprehensive validation functions for SSL certificate
-%%% request parameters including domain names, email addresses, and ACME
-%%% environment settings. It ensures all inputs meet the requirements for
-%%% Let's Encrypt certificate issuance.
-%%%
-%%% The module includes detailed error reporting to help users correct
-%%% invalid parameters quickly.
 -module(ssl_cert_validation).
+-moduledoc """
+SSL Certificate validation module.
+
+This module provides comprehensive validation functions for SSL certificate
+request parameters including domain names, email addresses, and ACME
+environment settings. It ensures all inputs meet the requirements for
+Let's Encrypt certificate issuance.
+
+The module includes detailed error reporting to help users correct
+invalid parameters quickly.
+""".
 
 -include("../include/ssl_cert.hrl").
+-include("../include/events.hrl").
 
 %% Public API
 -export([
@@ -22,27 +25,29 @@
 ]).
 
 %% Type specifications
--spec validate_request_params(term(), term(), term()) -> 
+-spec validate_request_params(term(), term(), term()) ->
     {ok, map()} | {error, binary()}.
--spec validate_domains(term()) -> 
+-spec validate_domains(term()) ->
     {ok, domain_list()} | {error, binary()}.
--spec validate_email(term()) -> 
+-spec validate_email(term()) ->
     {ok, email_address()} | {error, binary()}.
--spec validate_environment(term()) -> 
+-spec validate_environment(term()) ->
     {ok, acme_environment()} | {error, binary()}.
 -spec is_valid_domain(string()) -> boolean().
 -spec is_valid_email(string()) -> boolean().
 
-%% @doc Validates certificate request parameters.
-%%
-%% This function performs comprehensive validation of all required parameters
-%% for a certificate request including domains, email, and environment.
-%% It returns a validated parameter map or detailed error information.
-%%
-%% @param Domains List of domain names or not_found
-%% @param Email Contact email address or not_found  
-%% @param Environment ACME environment (staging/production)
-%% @returns {ok, ValidatedParams} or {error, Reason}
+-doc """
+Validates certificate request parameters.
+
+This function performs comprehensive validation of all required parameters
+for a certificate request including domains, email, and environment.
+It returns a validated parameter map or detailed error information.
+
+@param Domains List of domain names or not_found
+@param Email Contact email address or not_found
+@param Environment ACME environment (staging/production)
+@returns {ok, ValidatedParams} or {error, Reason}
+""".
 validate_request_params(Domains, Email, Environment) ->
     try
         % Validate domains
@@ -60,30 +65,32 @@ validate_request_params(Domains, Email, Environment) ->
                                     environment => ValidEnv,
                                     key_size => ?SSL_CERT_KEY_SIZE
                                 }};
-                            {error, Reason} ->
-                                {error, Reason}
+                            {error, _Reason} ->
+                                {error, <<"Invalid request parameters">>}
                         end;
-                    {error, Reason} ->
-                        {error, Reason}
+                    {error, _Reason} ->
+                        {error, <<"Invalid request parameters">>}
                 end;
-            {error, Reason} ->
-                {error, Reason}
+            {error, _Reason} ->
+                {error, <<"Invalid request parameters">>}
         end
     catch
         _:_ ->
             {error, <<"Invalid request parameters">>}
     end.
 
-%% @doc Validates a list of domain names.
-%%
-%% This function validates that:
-%% - Domains parameter is provided and is a list
-%% - All domains are valid according to DNS naming rules
-%% - At least one domain is provided
-%% - All domains pass individual validation checks
-%%
-%% @param Domains List of domain names or not_found
-%% @returns {ok, [ValidDomain]} or {error, Reason}
+-doc """
+Validates a list of domain names.
+
+This function validates that:
+- Domains parameter is provided and is a list
+- All domains are valid according to DNS naming rules
+- At least one domain is provided
+- All domains pass individual validation checks
+
+@param Domains List of domain names or not_found
+@returns {ok, [ValidDomain]} or {error, Reason}
+""".
 validate_domains(not_found) ->
     {error, <<"Missing domains parameter">>};
 validate_domains(Domains) when is_list(Domains) ->
@@ -103,7 +110,8 @@ validate_domains(Domains) when is_list(Domains) ->
                         case is_valid_domain(D) of
                             true -> {ok, D};
                             false -> {error, D}
-                        end || D <- DomainStrings
+                        end
+                     || D <- DomainStrings
                     ],
                     InvalidDomains = [D || {error, D} <- ValidationResults],
                     case InvalidDomains of
@@ -111,22 +119,25 @@ validate_domains(Domains) when is_list(Domains) ->
                             {ok, DomainStrings};
                         _ ->
                             InvalidList = string:join(InvalidDomains, ", "),
-                            {error, ssl_utils:bin(io_lib:format("Invalid domains: ~s", [InvalidList]))}
+                            {error,
+                                ssl_utils:bin(io_lib:format("Invalid domains: ~s", [InvalidList]))}
                     end
             end
     end;
 validate_domains(_) ->
     {error, <<"Domains must be a list">>}.
 
-%% @doc Validates an email address.
-%%
-%% This function validates that:
-%% - Email parameter is provided
-%% - Email format follows basic RFC standards
-%% - Email doesn't contain invalid patterns
-%%
-%% @param Email Email address or not_found
-%% @returns {ok, ValidEmail} or {error, Reason}
+-doc """
+Validates an email address.
+
+This function validates that:
+- Email parameter is provided
+- Email format follows basic RFC standards
+- Email doesn't contain invalid patterns
+
+@param Email Email address or not_found
+@returns {ok, ValidEmail} or {error, Reason}
+""".
 validate_email(not_found) ->
     {error, <<"Missing email parameter">>};
 validate_email(Email) ->
@@ -143,21 +154,24 @@ validate_email(Email) ->
             end
     end.
 
-%% @doc Validates the ACME environment.
-%%
-%% This function validates that the environment is either 'staging' or 'production'.
-%% It accepts both atom and binary formats and normalizes to atom format.
-%%
-%% @param Environment Environment atom or binary
-%% @returns {ok, ValidEnvironment} or {error, Reason}
+-doc """
+Validates the ACME environment.
+
+This function validates that the environment is either 'staging' or 'production'.
+It accepts both atom and binary formats and normalizes to atom format.
+
+@param Environment Environment atom or binary
+@returns {ok, ValidEnvironment} or {error, Reason}
+""".
 validate_environment(Environment) ->
-    EnvAtom = case Environment of
-        <<"staging">> -> staging;
-        <<"production">> -> production;
-        staging -> staging;
-        production -> production;
-        _ -> invalid
-    end,
+    EnvAtom =
+        case Environment of
+            <<"staging">> -> staging;
+            <<"production">> -> production;
+            staging -> staging;
+            production -> production;
+            _ -> invalid
+        end,
     case EnvAtom of
         invalid ->
             {error, <<"Environment must be 'staging' or 'production'">>};
@@ -165,33 +179,38 @@ validate_environment(Environment) ->
             {ok, EnvAtom}
     end.
 
-%% @doc Checks if a domain name is valid according to DNS standards.
-%%
-%% This function validates domain names according to RFC 1123 and RFC 952:
-%% - Labels can contain letters, numbers, and hyphens
-%% - Labels cannot start or end with hyphens
-%% - Labels cannot exceed 63 characters
-%% - Total domain length cannot exceed 253 characters
-%% - Domain must have at least one dot (except for localhost-style names)
-%%
-%% @param Domain Domain name string
-%% @returns true if valid, false otherwise
+-doc """
+Checks if a domain name is valid according to DNS standards.
+
+This function validates domain names according to RFC 1123 and RFC 952:
+- Labels can contain letters, numbers, and hyphens
+- Labels cannot start or end with hyphens
+- Labels cannot exceed 63 characters
+- Total domain length cannot exceed 253 characters
+- Domain must have at least one dot (except for localhost-style names)
+
+@param Domain Domain name string
+@returns true if valid, false otherwise
+""".
 is_valid_domain(Domain) when is_list(Domain) ->
     case Domain of
-        "" -> false;
+        "" ->
+            false;
         _ ->
             % Check total length
             case length(Domain) =< 253 of
-                false -> false;
+                false ->
+                    false;
                 true ->
                     % Basic domain validation regex
-                    DomainRegex = "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?" ++
-                                  "(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*$",
+                    DomainRegex =
+                        "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?" ++
+                            "(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*$",
                     case re:run(Domain, DomainRegex) of
-                        {match, _} -> 
+                        {match, _} ->
                             % Additional checks for edge cases
                             validate_domain_labels(Domain);
-                        nomatch -> 
+                        nomatch ->
                             false
                     end
             end
@@ -199,25 +218,28 @@ is_valid_domain(Domain) when is_list(Domain) ->
 is_valid_domain(_) ->
     false.
 
-%% @doc Checks if an email address is valid according to basic RFC standards.
-%%
-%% This function performs basic email validation:
-%% - Must contain exactly one @ symbol
-%% - Local part (before @) must be valid
-%% - Domain part (after @) must be valid
-%% - No consecutive dots
-%% - No dots adjacent to @ symbol
-%%
-%% @param Email Email address string
-%% @returns true if valid, false otherwise
+-doc """
+Checks if an email address is valid according to basic RFC standards.
+
+This function performs basic email validation:
+- Must contain exactly one @ symbol
+- Local part (before @) must be valid
+- Domain part (after @) must be valid
+- No consecutive dots
+- No dots adjacent to @ symbol
+
+@param Email Email address string
+@returns true if valid, false otherwise
+""".
 is_valid_email(Email) when is_list(Email) ->
     case Email of
-        "" -> false;
+        "" ->
+            false;
         _ ->
             % Basic email validation regex
             EmailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9][a-zA-Z0-9.-]*\\.[a-zA-Z]{2,}$",
             case re:run(Email, EmailRegex) of
-                {match, _} -> 
+                {match, _} ->
                     % Additional checks for invalid patterns
                     HasDoubleDots = string:find(Email, "..") =/= nomatch,
                     HasAtDot = string:find(Email, "@.") =/= nomatch,
@@ -228,9 +250,9 @@ is_valid_email(Email) when is_list(Email) ->
                     AtCount = length([C || C <- Email, C =:= $@]),
                     % Email is valid if none of the invalid patterns are present
                     AtCount =:= 1 andalso
-                    not (HasDoubleDots orelse HasAtDot orelse HasDotAt orelse 
-                         EndsWithDot orelse StartsWithDot);
-                nomatch -> 
+                        not (HasDoubleDots orelse HasAtDot orelse HasDotAt orelse
+                            EndsWithDot orelse StartsWithDot);
+                nomatch ->
                     false
             end
     end;
@@ -241,33 +263,42 @@ is_valid_email(_) ->
 %%% Internal Functions
 %%%--------------------------------------------------------------------
 
-%% @doc Validates individual domain labels for additional edge cases.
-%%
-%% @param Domain The domain to validate
-%% @returns true if all labels are valid, false otherwise
+-doc """
+Validates individual domain labels for additional edge cases.
+
+@param Domain The domain to validate
+@returns true if all labels are valid, false otherwise
+""".
 validate_domain_labels(Domain) ->
     Labels = string:split(Domain, ".", all),
     lists:all(fun validate_single_label/1, Labels).
 
-%% @doc Validates a single domain label.
-%%
-%% @param Label The domain label to validate
-%% @returns true if valid, false otherwise
+-doc """
+Validates a single domain label.
+
+@param Label The domain label to validate
+@returns true if valid, false otherwise
+""".
 validate_single_label(Label) ->
     case Label of
-        "" -> false;  % Empty labels not allowed
+        % Empty labels not allowed
+        "" ->
+            false;
         _ ->
             Length = length(Label),
             % Check length (1-63 characters)
             Length >= 1 andalso Length =< 63 andalso
-            % Cannot start or end with hyphen
-            not lists:prefix("-", Label) andalso
-            not lists:suffix("-", Label) andalso
-            % Must contain only valid characters
-            lists:all(fun(C) ->
-                (C >= $a andalso C =< $z) orelse
-                (C >= $A andalso C =< $Z) orelse  
-                (C >= $0 andalso C =< $9) orelse
-                C =:= $-
-            end, Label)
+                % Cannot start or end with hyphen
+                not lists:prefix("-", Label) andalso
+                not lists:suffix("-", Label) andalso
+                % Must contain only valid characters
+                lists:all(
+                    fun(C) ->
+                        (C >= $a andalso C =< $z) orelse
+                            (C >= $A andalso C =< $Z) orelse
+                            (C >= $0 andalso C =< $9) orelse
+                            C =:= $-
+                    end,
+                    Label
+                )
     end.

@@ -1,2 +1,2 @@
 _build
-tests
+rebar3.crashdump

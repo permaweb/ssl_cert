@@ -1,17 +1,17 @@
-{application, ssl_cert,
- [{description, "SSL Certificate Management Library with Let's Encrypt ACME support"},
-  {vsn, "1.0.0"},
-  {registered, []},
-  {applications,
-   [kernel,
-    stdlib,
-    crypto,
-    public_key,
-    ssl,
-    inets,
-    gun
-   ]},
-  {env,[]},
-  {modules, []},
-  {links, [{"GitHub", "https://github.com/permaweb/ssl_cert"}]}
- ]}.
+{application, ssl_cert, [
+    {description, "SSL Certificate Management Library with Let's Encrypt ACME support"},
+    {vsn, "1.0.0"},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        crypto,
+        public_key,
+        ssl,
+        inets,
+        gun
+    ]},
+    {env, []},
+    {modules, []},
+    {links, [{"GitHub", "https://github.com/permaweb/ssl_cert"}]}
+]}.

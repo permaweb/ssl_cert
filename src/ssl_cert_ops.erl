@@ -1,12 +1,14 @@
-%%% @doc SSL Certificate operations module.
-%%%
-%%% This module handles certificate-related operations including downloading
-%%% certificates from Let's Encrypt, processing certificate chains, and
-%%% managing certificate storage and retrieval.
-%%%
-%%% The module provides functions for the complete certificate lifecycle
-%%% from download to storage and cleanup operations.
 -module(ssl_cert_ops).
+-moduledoc """
+SSL Certificate operations module.
+
+This module handles certificate-related operations including downloading
+certificates from Let's Encrypt, processing certificate chains, and
+managing certificate storage and retrieval.
+
+The module provides functions for the complete certificate lifecycle
+from download to storage and cleanup operations.
+""".
 
 -include("../include/ssl_cert.hrl").
 -include("../include/events.hrl").
@@ -21,70 +23,89 @@
 ]).
 
 %% Type specifications
--spec download_certificate_state(request_state(), map()) -> 
+-spec download_certificate_state(request_state(), map()) ->
     {ok, map()} | {error, map()}.
--spec process_certificate_request(map(), map()) -> 
+-spec process_certificate_request(map(), map()) ->
     {ok, map()} | {error, map()}.
--spec renew_certificate(domain_list(), map()) -> 
+-spec renew_certificate(domain_list(), map()) ->
     {ok, map()} | {error, map()}.
--spec delete_certificate(domain_list(), map()) -> 
+-spec delete_certificate(domain_list(), map()) ->
     {ok, map()} | {error, map()}.
 -spec extract_end_entity_cert(string()) -> string().
 
-%% @doc Downloads a certificate from Let's Encrypt using the request state.
-%%
-%% This function extracts the necessary information from the request state,
-%% downloads the certificate from Let's Encrypt, and returns the certificate
-%% in PEM format along with metadata.
-%%
-%% @param State The current request state containing order information
-%% @param _Opts Configuration options (currently unused)
-%% @returns {ok, DownloadResponse} or {error, ErrorResponse}
+-doc """
+Downloads a certificate from Let's Encrypt using the request state.
+
+This function extracts the necessary information from the request state,
+downloads the certificate from Let's Encrypt, and returns the certificate
+in PEM format along with metadata.
+
+@param State The current request state containing order information
+@param _Opts Configuration options (currently unused)
+@returns {ok, DownloadResponse} or {error, ErrorResponse}
+""".
 download_certificate_state(State, _Opts) ->
-    maybe
-        _ ?= case is_map(State) of
-            true -> {ok, true};
-            false -> {error, invalid_request_state}
-        end,
-        Account = ssl_cert_state:extract_account_from_state(State),
-        Order = ssl_cert_state:extract_order_from_state(State),
-        {ok, CertPem} ?= acme_client:download_certificate(Account, Order),
-        Domains = maps:get(<<"domains">>, State),
-        ProcessedCert = CertPem,
-        % Get the CSR private key from request state for nginx (wallet-based)
-        PrivKeyPem = ssl_utils:list(maps:get(<<"csr_private_key_pem">>, State, <<>>)),
-        {ok, #{<<"status">> => 200, 
-               <<"body">> => #{
-                   <<"message">> => <<"Certificate downloaded successfully">>,
-                   <<"certificate_pem">> => ssl_utils:bin(ProcessedCert),
-                   <<"private_key_pem">> => ssl_utils:bin(PrivKeyPem),
-                   <<"domains">> => [ssl_utils:bin(D) || D <- Domains],
-                   <<"include_chain">> => true
-               }}}
-    else
-        {error, invalid_request_state} ->
-            {error, #{<<"status">> => 400, <<"error">> => <<"Invalid request state">>}};
-        {error, certificate_not_ready} ->
-            {ok, #{<<"status">> => 202, 
-                   <<"body">> => #{<<"message">> => <<"Certificate not ready yet">>}}};
-        {error, Reason} ->
-            {error, #{<<"status">> => 500, 
-                     <<"error">> => ssl_utils:bin(io_lib:format("Download failed: ~p", [Reason]))}};
-        Error ->
-            {error, #{<<"status">> => 500, <<"error">> => ssl_utils:bin(io_lib:format("~p", [Error]))}}
+    case is_map(State) of
+        true ->
+            try
+                Account = ssl_cert_state:extract_account_from_state(State),
+                Order = ssl_cert_state:extract_order_from_state(State),
+                case acme_client:download_certificate(Account, Order) of
+                    {ok, CertPem} ->
+                        Domains = maps:get(<<"domains">>, State),
+                        ProcessedCert = CertPem,
+                        % Get the CSR private key from request state for nginx (wallet-based)
+                        PrivKeyPem = ssl_utils:list(
+                            maps:get(<<"csr_private_key_pem">>, State, <<>>)
+                        ),
+                        {ok, #{
+                            <<"status">> => 200,
+                            <<"body">> => #{
+                                <<"message">> => <<"Certificate downloaded successfully">>,
+                                <<"certificate_pem">> => ssl_utils:bin(ProcessedCert),
+                                <<"private_key_pem">> => ssl_utils:bin(PrivKeyPem),
+                                <<"domains">> => [ssl_utils:bin(D) || D <- Domains],
+                                <<"include_chain">> => true
+                            }
+                        }};
+                    {error, certificate_not_ready} ->
+                        {ok, #{
+                            <<"status">> => 202,
+                            <<"body">> => #{<<"message">> => <<"Certificate not ready yet">>}
+                        }};
+                    {error, Reason} ->
+                        {error, #{
+                            <<"status">> => 500,
+                            <<"error">> => ssl_utils:bin(
+                                io_lib:format("Download failed: ~p", [Reason])
+                            )
+                        }}
+                end
+            catch
+                Error:CatchReason ->
+                    {error, #{
+                        <<"status">> => 500,
+                        <<"error">> => ssl_utils:bin(io_lib:format("~p", [Error])),
+                        <<"catch_reason">> => ssl_utils:bin(io_lib:format("~p", [CatchReason]))
+                    }}
+            end;
+        false ->
+            {error, #{<<"status">> => 400, <<"error">> => <<"Invalid request state">>}}
     end.
 
-%% @doc Processes a validated certificate request by creating ACME components.
-%%
-%% This function orchestrates the certificate request process:
-%% 1. Creates an ACME account with Let's Encrypt
-%% 2. Submits a certificate order
-%% 3. Generates DNS challenges
-%% 4. Creates and returns the request state
-%%
-%% @param ValidatedParams Map of validated request parameters
-%% @param Wallet Wallet record
-%% @returns {ok, Map} with request details or {error, Reason}
+-doc """
+Processes a validated certificate request by creating ACME components.
+
+This function orchestrates the certificate request process:
+1. Creates an ACME account with Let's Encrypt
+2. Submits a certificate order
+3. Generates DNS challenges
+4. Creates and returns the request state
+
+@param ValidatedParams Map of validated request parameters
+@param Wallet Wallet record
+@returns {ok, Map} with request details or {error, Reason}
+""".
 process_certificate_request(ValidatedParams, Wallet) ->
     ?event(ssl_cert, {ssl_cert_processing_request, ValidatedParams}),
     maybe
@@ -107,13 +128,16 @@ process_certificate_request(ValidatedParams, Wallet) ->
                 acme_client:get_dns_challenge(Account, Order)
             end)(),
         ?event(ssl_cert, {challenges, {explicit, Challenges}}),
-        RequestState = ssl_cert_state:create_request_state(Account, Order, Challenges, ValidatedParams),
+        RequestState = ssl_cert_state:create_request_state(
+            Account, Order, Challenges, ValidatedParams
+        ),
         {ok, #{
             <<"status">> => 200,
             <<"body">> => #{
                 <<"status">> => <<"pending_dns">>,
                 <<"request_state">> => RequestState,
-                <<"message">> => <<"Certificate request created. Use /challenges endpoint to get DNS records.">>,
+                <<"message">> =>
+                    <<"Certificate request created. Use /challenges endpoint to get DNS records.">>,
                 <<"domains">> => [ssl_utils:bin(D) || D <- Domains],
                 <<"next_step">> => <<"challenges">>,
                 <<"certificate_key">> => CertificateKey
@@ -124,79 +148,63 @@ process_certificate_request(ValidatedParams, Wallet) ->
             ?event(ssl_cert, {ssl_cert_process_error_maybe, Reason}),
             case Reason of
                 {account_creation_failed, SubReason} ->
-                    {error, #{<<"status">> => 500, <<"error_info">> => #{
-                        <<"error">> => <<"ACME account creation failed">>,
-                        <<"details">> => ssl_utils:format_error_details(SubReason)
-                    }}};
+                    {error, #{
+                        <<"status">> => 500,
+                        <<"error_info">> => #{
+                            <<"error">> => <<"ACME account creation failed">>,
+                            <<"details">> => ssl_utils:format_error_details(SubReason)
+                        }
+                    }};
                 {connection_failed, ConnReason} ->
-                    {error, #{<<"status">> => 500, <<"error_info">> => #{
-                        <<"error">> => <<"Connection to Let's Encrypt failed">>,
-                        <<"details">> => ssl_utils:bin(io_lib:format("~p", [ConnReason]))
-                    }}};
+                    {error, #{
+                        <<"status">> => 500,
+                        <<"error_info">> => #{
+                            <<"error">> => <<"Connection to Let's Encrypt failed">>,
+                            <<"details">> => ssl_utils:bin(io_lib:format("~p", [ConnReason]))
+                        }
+                    }};
                 _ ->
-                    {error, #{<<"status">> => 500, <<"error">> => ssl_utils:bin(io_lib:format("~p", [Reason]))}}
+                    {error, #{
+                        <<"status">> => 500,
+                        <<"error">> => ssl_utils:bin(io_lib:format("~p", [Reason]))
+                    }}
             end;
         Error ->
             ?event(ssl_cert, {ssl_cert_request_processing_failed, Error}),
-            {error, #{<<"status">> => 500, <<"error">> => <<"Certificate request processing failed">>}}
+            {error, #{
+                <<"status">> => 500, <<"error">> => <<"Certificate request processing failed">>
+            }}
     end.
 
-%% @doc Renews an existing SSL certificate.
-%%
-%% This function initiates renewal for an existing certificate by creating
-%% a new certificate request with the same parameters as the original.
-%% It reads the configuration from the provided options and creates a new
-%% certificate request.
-%%
-%% @param Domains List of domain names to renew
-%% @param Opts Configuration options containing SSL settings
-%% @returns {ok, RenewalResponse} or {error, ErrorResponse}
+-doc """
+Renews an existing SSL certificate.
+
+This function initiates renewal for an existing certificate by creating
+a new certificate request with the same parameters as the original.
+It reads the configuration from the provided options and creates a new
+certificate request.
+
+@param Domains List of domain names to renew
+@param Opts Configuration options containing SSL settings
+@returns {ok, RenewalResponse} or {error, ErrorResponse}
+""".
 renew_certificate(Domains, Opts) ->
     ?event(ssl_cert, {ssl_cert_renewal_started, {domains, Domains}}),
     try
-        % Read SSL configuration from hb_opts  
+        % Read SSL configuration from hb_opts
         % SslOpts = hb_opts:get(<<"ssl_opts">>, not_found, Opts),
         SslOpts = not_found,
         % Use configuration for renewal settings (no fallbacks)
-        Email = case SslOpts of
+        case SslOpts of
             not_found ->
-                throw({error, <<"ssl_opts configuration required for renewal">>});
+                {error, <<"ssl_opts configuration required for renewal">>};
             _ ->
                 case maps:get(<<"email">>, SslOpts, not_found) of
                     not_found ->
-                        throw({error, <<"email required in ssl_opts configuration">>});
-                    ConfigEmail ->
-                        ConfigEmail
+                        {error, <<"email required in ssl_opts configuration">>};
+                    Email ->
+                        renew_certificate_with_config(Domains, Email, SslOpts, Opts)
                 end
-        end,
-        Environment = case SslOpts of
-            not_found ->
-                staging; % Only fallback is staging for safety
-            _ ->
-                maps:get(<<"environment">>, SslOpts, staging)
-        end,
-        RenewalConfig = #{
-            domains => [ssl_utils:list(D) || D <- Domains],
-            email => Email,
-            environment => Environment,
-            key_size => ?SSL_CERT_KEY_SIZE
-        },
-        ?event(ssl_cert, {
-            ssl_cert_renewal_config_created,
-            {config, RenewalConfig}
-        }),
-        % Create new certificate request (renewal)
-        case process_certificate_request(RenewalConfig, Opts) of
-            {ok, Response} ->
-                _Body = maps:get(<<"body">>, Response),
-                {ok, #{<<"status">> => 200, 
-                       <<"body">> => #{
-                           <<"message">> => <<"Certificate renewal initiated">>,
-                           <<"domains">> => [ssl_utils:bin(D) || D <- Domains]
-                       }}};
-            {error, ErrorResp} ->
-                ?event(ssl_cert, {ssl_cert_renewal_failed, {error, ErrorResp}}),
-                {error, ErrorResp}
         end
     catch
         Error:Reason:Stacktrace ->
@@ -207,19 +215,23 @@ renew_certificate(Domains, Opts) ->
                 {domains, Domains},
                 {stacktrace, Stacktrace}
             }),
-            {error, #{<<"status">> => 500, 
-                     <<"error">> => <<"Certificate renewal failed">>}}
+            {error, #{
+                <<"status">> => 500,
+                <<"error">> => <<"Certificate renewal failed">>
+            }}
     end.
 
-%% @doc Deletes a stored SSL certificate.
-%%
-%% This function removes certificate data associated with the specified domains.
-%% In the current implementation, this is a simulated operation that logs
-%% the deletion request.
-%%
-%% @param Domains List of domain names to delete
-%% @param _Opts Configuration options (currently unused)
-%% @returns {ok, DeletionResponse} or {error, ErrorResponse}
+-doc """
+Deletes a stored SSL certificate.
+
+This function removes certificate data associated with the specified domains.
+In the current implementation, this is a simulated operation that logs
+the deletion request.
+
+@param Domains List of domain names to delete
+@param _Opts Configuration options (currently unused)
+@returns {ok, DeletionResponse} or {error, ErrorResponse}
+""".
 delete_certificate(Domains, _Opts) ->
     ?event(ssl_cert, {ssl_cert_deletion_started, {domains, Domains}}),
     try
@@ -233,12 +245,14 @@ delete_certificate(Domains, _Opts) ->
             ssl_cert_deletion_simulated,
             {domains, DomainList}
         }),
-        {ok, #{<<"status">> => 200, 
-               <<"body">> => #{
-                   <<"message">> => <<"Certificate deletion completed">>,
-                   <<"domains">> => [ssl_utils:bin(D) || D <- DomainList],
-                   <<"deleted_count">> => length(DomainList)
-               }}}
+        {ok, #{
+            <<"status">> => 200,
+            <<"body">> => #{
+                <<"message">> => <<"Certificate deletion completed">>,
+                <<"domains">> => [ssl_utils:bin(D) || D <- DomainList],
+                <<"deleted_count">> => length(DomainList)
+            }
+        }}
     catch
         Error:Reason:Stacktrace ->
             ?event(ssl_cert, {
@@ -248,18 +262,22 @@ delete_certificate(Domains, _Opts) ->
                 {domains, Domains},
                 {stacktrace, Stacktrace}
             }),
-            {error, #{<<"status">> => 500, 
-                     <<"error">> => <<"Certificate deletion failed">>}}
+            {error, #{
+                <<"status">> => 500,
+                <<"error">> => <<"Certificate deletion failed">>
+            }}
     end.
 
-%% @doc Extracts only the end-entity certificate from a PEM chain.
-%%
-%% This function parses a PEM certificate chain and returns only the
-%% end-entity (leaf) certificate, which is typically the first certificate
-%% in the chain.
-%%
-%% @param CertPem Full certificate chain in PEM format
-%% @returns Only the end-entity certificate in PEM format
+-doc """
+Extracts only the end-entity certificate from a PEM chain.
+
+This function parses a PEM certificate chain and returns only the
+end-entity (leaf) certificate, which is typically the first certificate
+in the chain.
+
+@param CertPem Full certificate chain in PEM format
+@returns Only the end-entity certificate in PEM format
+""".
 extract_end_entity_cert(CertPem) ->
     % Split PEM into individual certificates
     CertLines = string:split(CertPem, "\n", all),
@@ -270,12 +288,14 @@ extract_end_entity_cert(CertPem) ->
 %%% Internal Functions
 %%%--------------------------------------------------------------------
 
-%% @doc Helper to extract the first certificate from PEM lines.
-%%
-%% @param Lines List of PEM lines to process
-%% @param Acc Accumulator for certificate lines
-%% @param InCert Whether we're currently inside a certificate block
-%% @returns First certificate as string
+-doc """
+Helper to extract the first certificate from PEM lines.
+
+@param Lines List of PEM lines to process
+@param Acc Accumulator for certificate lines
+@param InCert Whether we're currently inside a certificate block
+@returns First certificate as string
+""".
 extract_first_cert([], Acc, _InCert) ->
     string:join(lists:reverse(Acc), "\n");
 extract_first_cert([Line | Rest], Acc, InCert) ->
@@ -288,4 +308,45 @@ extract_first_cert([Line | Rest], Acc, InCert) ->
             extract_first_cert(Rest, [Line | Acc], true);
         {_, false} ->
             extract_first_cert(Rest, Acc, false)
+    end.
+
+%%%--------------------------------------------------------------------
+%%% Internal Functions
+%%%--------------------------------------------------------------------
+
+-doc """
+Handles certificate renewal with validated configuration.
+
+@param Domains List of domain names
+@param Email Email address
+@param SslOpts SSL configuration options
+@param Opts Additional options
+@returns {ok, Response} or {error, Reason}
+""".
+renew_certificate_with_config(Domains, Email, SslOpts, Opts) ->
+    Environment = maps:get(<<"environment">>, SslOpts, staging),
+    RenewalConfig = #{
+        domains => [ssl_utils:list(D) || D <- Domains],
+        email => Email,
+        environment => Environment,
+        key_size => ?SSL_CERT_KEY_SIZE
+    },
+    ?event(ssl_cert, {
+        ssl_cert_renewal_config_created,
+        {config, RenewalConfig}
+    }),
+    % Create new certificate request (renewal)
+    case process_certificate_request(RenewalConfig, Opts) of
+        {ok, Response} ->
+            _Body = maps:get(<<"body">>, Response),
+            {ok, #{
+                <<"status">> => 200,
+                <<"body">> => #{
+                    <<"message">> => <<"Certificate renewal initiated">>,
+                    <<"domains">> => [ssl_utils:bin(D) || D <- Domains]
+                }
+            }};
+        {error, ErrorResp} ->
+            ?event(ssl_cert, {ssl_cert_renewal_failed, {error, ErrorResp}}),
+            {error, ErrorResp}
     end.
