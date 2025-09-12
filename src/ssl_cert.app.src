@@ -2,6 +2,7 @@
     {description, "SSL Certificate Management Library with Let's Encrypt ACME support"},
     {vsn, "1.0.0"},
     {registered, []},
+    {modules, []},
     {applications, [
         kernel,
         stdlib,
@@ -11,8 +12,6 @@
         inets,
         gun
     ]},
-    {env, []},
-    {modules, []},
     {licenses, ["MIT"]},
     {links, [{"GitHub", "https://github.com/permaweb/ssl_cert"}]}
 ]}.
