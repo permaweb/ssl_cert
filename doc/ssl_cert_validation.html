@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.35.1">
+    <meta name="project" content="ssl_cert v1.0.0">
+
+
+    <title>ssl_cert_validation — ssl_cert v1.0.0</title>
+    <link rel="stylesheet" href="dist/html-erlang-4IXSOGMD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-67DEDFE0.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-PVRIOB7F.js"></script>
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+ssl_cert
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of ssl_cert</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_validation.erl#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+    <span translate="no">ssl_cert_validation</span> 
+    <small class="app-vsn" translate="no">(ssl_cert v1.0.0)</small>
+
+  </h1>
+
+
+    <section id="moduledoc">
+<p>SSL Certificate validation module.</p><p>This module provides comprehensive validation functions for SSL certificate
+request parameters including domain names, email addresses, and ACME
+environment settings. It ensures all inputs meet the requirements for
+Let's Encrypt certificate issuance.</p><p>The module includes detailed error reporting to help users correct
+invalid parameters quickly.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_account/0" data-no-tooltip translate="no">acme_account()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME account record containing private key, URL, and key ID.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_environment/0" data-no-tooltip translate="no">acme_environment()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME environment type - staging or production.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_order/0" data-no-tooltip translate="no">acme_order()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME order record containing order details and status.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:dns_challenge/0" data-no-tooltip translate="no">dns_challenge()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>DNS challenge record for domain validation.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:domain_list/0" data-no-tooltip translate="no">domain_list()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>List of domain names as strings.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:email_address/0" data-no-tooltip translate="no">email_address()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Email address as a string.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:request_state/0" data-no-tooltip translate="no">request_state()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Request state map with binary keys and arbitrary values.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:validation_result/0" data-no-tooltip translate="no">validation_result()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validation result map with binary keys and values.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_valid_domain/1" data-no-tooltip translate="no">is_valid_domain/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Checks if a domain name is valid according to DNS standards.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_valid_email/1" data-no-tooltip translate="no">is_valid_email/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Checks if an email address is valid according to basic RFC standards.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_domains/1" data-no-tooltip translate="no">validate_domains/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a list of domain names.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_email/1" data-no-tooltip translate="no">validate_email/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates an email address.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_environment/1" data-no-tooltip translate="no">validate_environment(Environment)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates the ACME environment.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_request_params/3" data-no-tooltip translate="no">validate_request_params(Domains, Email, Environment)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates certificate request parameters.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:acme_account/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_account/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_account()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L80" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_account() :: #acme_account{key :: <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>(), url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), kid :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>ACME account record containing private key, URL, and key ID.</p>
+  </section>
+</section>
+<section class="detail" id="t:acme_environment/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_environment/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_environment()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L86" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_environment() :: staging | production.</pre>
+
+      </div>
+
+<p>ACME environment type - staging or production.</p>
+  </section>
+</section>
+<section class="detail" id="t:acme_order/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_order/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_order()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L82" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_order() ::
+          #acme_order{url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      status :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      expires :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      identifiers :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:list/0">list</a>(),
+                      authorizations :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:list/0">list</a>(),
+                      finalize :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      certificate :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>ACME order record containing order details and status.</p>
+  </section>
+</section>
+<section class="detail" id="t:dns_challenge/0">
+
+  <div class="detail-header">
+    <a href="#t:dns_challenge/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">dns_challenge()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L84" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> dns_challenge() ::
+          #dns_challenge{domain :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         token :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         key_authorization :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         dns_value :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>DNS challenge record for domain validation.</p>
+  </section>
+</section>
+<section class="detail" id="t:domain_list/0">
+
+  <div class="detail-header">
+    <a href="#t:domain_list/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">domain_list()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L88" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> domain_list() :: [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()].</pre>
+
+      </div>
+
+<p>List of domain names as strings.</p>
+  </section>
+</section>
+<section class="detail" id="t:email_address/0">
+
+  <div class="detail-header">
+    <a href="#t:email_address/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">email_address()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L90" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> email_address() :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Email address as a string.</p>
+  </section>
+</section>
+<section class="detail" id="t:request_state/0">
+
+  <div class="detail-header">
+    <a href="#t:request_state/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">request_state()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L94" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> request_state() :: #{<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Request state map with binary keys and arbitrary values.</p>
+  </section>
+</section>
+<section class="detail" id="t:validation_result/0">
+
+  <div class="detail-header">
+    <a href="#t:validation_result/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validation_result()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L92" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> validation_result() :: #{<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Validation result map with binary keys and values.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="is_valid_domain/1">
+
+  <div class="detail-header">
+    <a href="#is_valid_domain/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">is_valid_domain/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_validation.erl#L195" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> is_valid_domain(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>().</pre>
+
+      </div>
+
+<p>Checks if a domain name is valid according to DNS standards.</p><p>This function validates domain names according to RFC 1123 and RFC 952:</p><ul><li>Labels can contain letters, numbers, and hyphens</li><li>Labels cannot start or end with hyphens</li><li>Labels cannot exceed 63 characters</li><li>Total domain length cannot exceed 253 characters</li><li>Domain must have at least one dot (except for localhost-style names)</li></ul><p>@param Domain Domain name string
+@returns true if valid, false otherwise</p>
+  </section>
+</section>
+<section class="detail" id="is_valid_email/1">
+
+  <div class="detail-header">
+    <a href="#is_valid_email/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">is_valid_email/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_validation.erl#L234" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> is_valid_email(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>().</pre>
+
+      </div>
+
+<p>Checks if an email address is valid according to basic RFC standards.</p><p>This function performs basic email validation:</p><ul><li>Must contain exactly one @ symbol</li><li>Local part (before @) must be valid</li><li>Domain part (after @) must be valid</li><li>No consecutive dots</li><li>No dots adjacent to @ symbol</li></ul><p>@param Email Email address string
+@returns true if valid, false otherwise</p>
+  </section>
+</section>
+<section class="detail" id="validate_domains/1">
+
+  <div class="detail-header">
+    <a href="#validate_domains/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validate_domains/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_validation.erl#L94" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validate_domains(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> {ok, <a href="#t:domain_list/0">domain_list</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Validates a list of domain names.</p><p>This function validates that:</p><ul><li>Domains parameter is provided and is a list</li><li>All domains are valid according to DNS naming rules</li><li>At least one domain is provided</li><li>All domains pass individual validation checks</li></ul><p>@param Domains List of domain names or not_found
+@returns {ok, [ValidDomain]} or {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="validate_email/1">
+
+  <div class="detail-header">
+    <a href="#validate_email/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validate_email/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_validation.erl#L141" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validate_email(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> {ok, <a href="#t:email_address/0">email_address</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Validates an email address.</p><p>This function validates that:</p><ul><li>Email parameter is provided</li><li>Email format follows basic RFC standards</li><li>Email doesn't contain invalid patterns</li></ul><p>@param Email Email address or not_found
+@returns {ok, ValidEmail} or {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="validate_environment/1">
+
+  <div class="detail-header">
+    <a href="#validate_environment/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validate_environment(Environment)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_validation.erl#L166" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validate_environment(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> {ok, <a href="#t:acme_environment/0">acme_environment</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Validates the ACME environment.</p><p>This function validates that the environment is either 'staging' or 'production'.
+It accepts both atom and binary formats and normalizes to atom format.</p><p>@param Environment Environment atom or binary
+@returns {ok, ValidEnvironment} or {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="validate_request_params/3">
+
+  <div class="detail-header">
+    <a href="#validate_request_params/3" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validate_request_params(Domains, Email, Environment)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_validation.erl#L51" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validate_request_params(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Validates certificate request parameters.</p><p>This function performs comprehensive validation of all required parameters
+for a certificate request including domains, email, and environment.
+It returns a validated parameter map or detailed error information.</p><p>@param Domains List of domain names or not_found
+@param Email Contact email address or not_found
+@param Environment ACME environment (staging/production)
+@returns {ok, ValidatedParams} or {error, Reason}</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/ssl_cert/1.0.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/ssl_cert/1.0.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="ssl_cert.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.35.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

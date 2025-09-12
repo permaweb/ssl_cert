@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.35.1">
+    <meta name="project" content="ssl_cert v1.0.0">
+
+
+    <title>Overview — ssl_cert v1.0.0</title>
+    <link rel="stylesheet" href="dist/html-erlang-4IXSOGMD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-67DEDFE0.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-PVRIOB7F.js"></script>
+
+  </head>
+  <body data-type="extras" class="page-extra">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+ssl_cert
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of ssl_cert</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/README.md#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+
+    <span>SSL Certificate Library</span>
+  </h1>
+
+<p>A comprehensive SSL certificate management library with Let's Encrypt ACME v2 support for Erlang/OTP applications.</p><h2 id="index" class="section-heading">
+  <a href="#index" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Index</span>
+</h2>
+<ul><li><a href="#features">Features</a></li><li><a href="#installation">Installation</a></li><li><a href="#usage">Usage</a></li><li><a href="#modules">Modules</a></li><li><a href="#dependencies">Dependencies</a></li><li><a href="#code-coverage">Code Coverage</a></li><li><a href="#development-commands">Development Commands</a></li></ul><h2 id="features" class="section-heading">
+  <a href="#features" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Features</span>
+</h2>
+<ul><li>Full ACME v2 protocol support</li><li>Let's Encrypt certificate automation  </li><li>DNS and HTTP-01 challenge support</li><li>Certificate lifecycle management</li><li>Cryptographic operations for certificate handling</li><li>Comprehensive validation and state management</li><li>Modern HTTP/2 client using gun</li></ul><h2 id="installation" class="section-heading">
+  <a href="#installation" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Installation</span>
+</h2>
+<p>Add this library to your <code class="inline">rebar.config</code> dependencies:</p><pre><code class="makeup erlang" translate="no"><span class="p" data-group-id="7351513036-1">{</span><span class="ss">deps</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7351513036-2">[</span><span class="w">
+    </span><span class="p" data-group-id="7351513036-3">{</span><span class="ss">ssl_cert</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7351513036-4">{</span><span class="ss">git</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;https://github.com/permaweb/ssl_cert.git&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="7351513036-5">{</span><span class="ss">branch</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;main&quot;</span><span class="p" data-group-id="7351513036-5">}</span><span class="p" data-group-id="7351513036-4">}</span><span class="p" data-group-id="7351513036-3">}</span><span class="w">
+</span><span class="p" data-group-id="7351513036-2">]</span><span class="p" data-group-id="7351513036-1">}</span><span class="p">.</span></code></pre><h2 id="usage" class="section-heading">
+  <a href="#usage" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Usage</span>
+</h2>
+<h3 id="device-configuration" class="section-heading">
+  <a href="#device-configuration" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Device Configuration</span>
+</h3>
+<p>Configure the SSL certificate device with the required options:</p><pre><code class="makeup erlang" translate="no"><span class="c1">%% Configuration for SSL certificate requests</span><span class="w">
+</span><span class="n">Opts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="5659183497-1">#{</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;ssl_opts&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="5659183497-2">#{</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;domains&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="5659183497-3">[</span><span class="p">&lt;&lt;</span><span class="s">&quot;example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;www.example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="5659183497-3">]</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;email&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;admin@example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;environment&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;staging&quot;</span><span class="p">&gt;&gt;</span><span class="w">  </span><span class="c1">% Use &quot;production&quot; for live certificates</span><span class="w">
+    </span><span class="p" data-group-id="5659183497-2">}</span><span class="w">
+</span><span class="p" data-group-id="5659183497-1">}</span><span class="p">.</span></code></pre><h3 id="certificate-request-workflow" class="section-heading">
+  <a href="#certificate-request-workflow" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Certificate Request Workflow</span>
+</h3>
+<h4>Step 1: Request Certificate</h4><pre><code class="makeup erlang" translate="no"><span class="c1">%% Initiate certificate request - returns DNS challenges</span><span class="w">
+</span><span class="p" data-group-id="4190837693-1">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">Response</span><span class="p" data-group-id="4190837693-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">dev_ssl_cert</span><span class="p">:</span><span class="nf">request</span><span class="p" data-group-id="4190837693-2">(</span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="n">Opts</span><span class="p" data-group-id="4190837693-2">)</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="4190837693-3">#{</span><span class="p">&lt;&lt;</span><span class="s">&quot;body&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p" data-group-id="4190837693-4">#{</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;challenges&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="n">Challenges</span><span class="p">,</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;message&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;Create DNS TXT records for the following challenges, then call finalize&quot;</span><span class="p">&gt;&gt;</span><span class="w">
+</span><span class="p" data-group-id="4190837693-4">}</span><span class="p" data-group-id="4190837693-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Response</span><span class="p">.</span></code></pre><h4>Step 2: Set DNS TXT Records</h4><p>Based on the returned challenges, create DNS TXT records:</p><pre><code class="makeup erlang" translate="no"><span class="p">_</span><span class="ss">acme</span><span class="o">-</span><span class="ss">challenge</span><span class="p">.</span><span class="ss">example</span><span class="p">.</span><span class="ss">com</span><span class="p">.</span><span class="w">     </span><span class="n">TXT</span><span class="w"> </span><span class="s">&quot;challenge_token_here&quot;</span><span class="w">
+</span><span class="p">_</span><span class="ss">acme</span><span class="o">-</span><span class="ss">challenge</span><span class="p">.</span><span class="ss">www</span><span class="p">.</span><span class="ss">example</span><span class="p">.</span><span class="ss">com</span><span class="p">.</span><span class="w"> </span><span class="n">TXT</span><span class="w"> </span><span class="s">&quot;challenge_token_here&quot;</span></code></pre><h4>Step 3: Finalize Certificate</h4><pre><code class="makeup erlang" translate="no"><span class="c1">%% After DNS records are set, finalize the certificate</span><span class="w">
+</span><span class="p" data-group-id="7975074378-1">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">FinalResponse</span><span class="p" data-group-id="7975074378-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">dev_ssl_cert</span><span class="p">:</span><span class="nf">finalize</span><span class="p" data-group-id="7975074378-2">(</span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="n">Opts</span><span class="p" data-group-id="7975074378-2">)</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="7975074378-3">#{</span><span class="p">&lt;&lt;</span><span class="s">&quot;body&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="p" data-group-id="7975074378-4">#{</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;certificate_pem&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="n">CertPem</span><span class="p">,</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;key_pem&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="n">KeyPem</span><span class="p">,</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;domains&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">:=</span><span class="w"> </span><span class="n">Domains</span><span class="w">
+</span><span class="p" data-group-id="7975074378-4">}</span><span class="p" data-group-id="7975074378-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FinalResponse</span><span class="p">.</span></code></pre><h3 id="certificate-management" class="section-heading">
+  <a href="#certificate-management" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Certificate Management</span>
+</h3>
+<h4>Renew Certificate</h4><pre><code class="makeup erlang" translate="no"><span class="c1">%% Renew existing certificate</span><span class="w">
+</span><span class="n">RenewOpts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="2492561342-1">#{</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;ssl_opts&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="2492561342-2">#{</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;domains&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="2492561342-3">[</span><span class="p">&lt;&lt;</span><span class="s">&quot;example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;www.example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="2492561342-3">]</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;email&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;admin@example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;environment&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;production&quot;</span><span class="p">&gt;&gt;</span><span class="w">
+    </span><span class="p" data-group-id="2492561342-2">}</span><span class="w">
+</span><span class="p" data-group-id="2492561342-1">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="2492561342-4">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">RenewResponse</span><span class="p" data-group-id="2492561342-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">dev_ssl_cert</span><span class="p">:</span><span class="nf">renew</span><span class="p" data-group-id="2492561342-5">(</span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="n">RenewOpts</span><span class="p" data-group-id="2492561342-5">)</span><span class="p">.</span></code></pre><h4>Delete Certificate</h4><pre><code class="makeup erlang" translate="no"><span class="c1">%% Delete stored certificate</span><span class="w">
+</span><span class="n">DeleteOpts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="1492131855-1">#{</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;ssl_opts&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="1492131855-2">#{</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;domains&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="1492131855-3">[</span><span class="p">&lt;&lt;</span><span class="s">&quot;example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;www.example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="1492131855-3">]</span><span class="w">
+    </span><span class="p" data-group-id="1492131855-2">}</span><span class="w">
+</span><span class="p" data-group-id="1492131855-1">}</span><span class="p">,</span><span class="w">
+</span><span class="p" data-group-id="1492131855-4">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">DeleteResponse</span><span class="p" data-group-id="1492131855-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">dev_ssl_cert</span><span class="p">:</span><span class="nf">delete</span><span class="p" data-group-id="1492131855-5">(</span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="ss">undefined</span><span class="p">,</span><span class="w"> </span><span class="n">DeleteOpts</span><span class="p" data-group-id="1492131855-5">)</span><span class="p">.</span></code></pre><h3 id="environment-configuration" class="section-heading">
+  <a href="#environment-configuration" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Environment Configuration</span>
+</h3>
+<h4>Staging Environment (for testing)</h4><pre><code class="makeup erlang" translate="no"><span class="n">StagingOpts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="3618107417-1">#{</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;ssl_opts&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="3618107417-2">#{</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;domains&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="3618107417-3">[</span><span class="p">&lt;&lt;</span><span class="s">&quot;test.example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="3618107417-3">]</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;email&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;test@example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;environment&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;staging&quot;</span><span class="p">&gt;&gt;</span><span class="w">
+    </span><span class="p" data-group-id="3618107417-2">}</span><span class="w">
+</span><span class="p" data-group-id="3618107417-1">}</span><span class="p">.</span></code></pre><h4>Production Environment</h4><pre><code class="makeup erlang" translate="no"><span class="n">ProductionOpts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p" data-group-id="7138039365-1">#{</span><span class="w">
+    </span><span class="p">&lt;&lt;</span><span class="s">&quot;ssl_opts&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="7138039365-2">#{</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;domains&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p" data-group-id="7138039365-3">[</span><span class="p">&lt;&lt;</span><span class="s">&quot;example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="7138039365-3">]</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;email&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;admin@example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w">
+        </span><span class="p">&lt;&lt;</span><span class="s">&quot;environment&quot;</span><span class="p">&gt;&gt;</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;production&quot;</span><span class="p">&gt;&gt;</span><span class="w">
+    </span><span class="p" data-group-id="7138039365-2">}</span><span class="w">
+</span><span class="p" data-group-id="7138039365-1">}</span><span class="p">.</span></code></pre><h3 id="direct-module-usage" class="section-heading">
+  <a href="#direct-module-usage" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Direct Module Usage</span>
+</h3>
+<p>For advanced use cases, you can call the underlying modules directly:</p><pre><code class="makeup erlang" translate="no"><span class="c1">%% Validate request parameters</span><span class="w">
+</span><span class="p" data-group-id="4821811721-1">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">ValidatedParams</span><span class="p" data-group-id="4821811721-1">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">ssl_cert_validation</span><span class="p">:</span><span class="nf">validate_request_params</span><span class="p" data-group-id="4821811721-2">(</span><span class="w">
+    </span><span class="p" data-group-id="4821811721-3">[</span><span class="p">&lt;&lt;</span><span class="s">&quot;example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="4821811721-3">]</span><span class="p">,</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;admin@example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p">,</span><span class="w"> </span><span class="p">&lt;&lt;</span><span class="s">&quot;staging&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="4821811721-2">)</span><span class="p">,</span><span class="w">
+
+</span><span class="c1">%% Process certificate request</span><span class="w">
+</span><span class="p" data-group-id="4821811721-4">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">ProcessResponse</span><span class="p" data-group-id="4821811721-4">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">ssl_cert_ops</span><span class="p">:</span><span class="nf">process_certificate_request</span><span class="p" data-group-id="4821811721-5">(</span><span class="n">ValidatedParams</span><span class="p">,</span><span class="w"> </span><span class="n">Wallet</span><span class="p" data-group-id="4821811721-5">)</span><span class="p">,</span><span class="w">
+
+</span><span class="c1">%% Validate DNS challenges</span><span class="w">
+</span><span class="p" data-group-id="4821811721-6">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="n">ValidationResponse</span><span class="p" data-group-id="4821811721-6">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">ssl_cert_challenge</span><span class="p">:</span><span class="nf">validate_dns_challenges_state</span><span class="p" data-group-id="4821811721-7">(</span><span class="n">RequestState</span><span class="p">,</span><span class="w"> </span><span class="n">PrivateKey</span><span class="p" data-group-id="4821811721-7">)</span><span class="p">,</span><span class="w">
+
+</span><span class="c1">%% Generate CSR</span><span class="w">
+</span><span class="p" data-group-id="4821811721-8">{</span><span class="ss">ok</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4821811721-9">{</span><span class="n">CsrDer</span><span class="p">,</span><span class="w"> </span><span class="n">PrivateKey</span><span class="p" data-group-id="4821811721-9">}</span><span class="p" data-group-id="4821811721-8">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">acme_csr</span><span class="p">:</span><span class="nf">generate_csr</span><span class="p" data-group-id="4821811721-10">(</span><span class="p" data-group-id="4821811721-11">[</span><span class="p">&lt;&lt;</span><span class="s">&quot;example.com&quot;</span><span class="p">&gt;&gt;</span><span class="p" data-group-id="4821811721-11">]</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4821811721-12">#{</span><span class="p" data-group-id="4821811721-12">}</span><span class="p" data-group-id="4821811721-10">)</span><span class="p">.</span></code></pre><h2 id="modules" class="section-heading">
+  <a href="#modules" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Modules</span>
+</h2>
+<ul><li><strong><code class="inline">acme_client</code></strong> - Main ACME client API</li><li><strong><code class="inline">ssl_cert_ops</code></strong> - High-level certificate operations</li><li><strong><code class="inline">acme_protocol</code></strong> - Core ACME protocol implementation</li><li><strong><code class="inline">acme_crypto</code></strong> - Cryptographic operations and JWS</li><li><strong><code class="inline">acme_csr</code></strong> - Certificate Signing Request generation</li><li><strong><code class="inline">ssl_cert_challenge</code></strong> - Challenge handling and validation</li><li><strong><code class="inline">ssl_cert_validation</code></strong> - Certificate validation utilities</li><li><strong><code class="inline">ssl_cert_state</code></strong> - State management utilities</li><li><strong><code class="inline">ssl_utils</code></strong> - Utility functions and HTTP client</li></ul><h2 id="dependencies" class="section-heading">
+  <a href="#dependencies" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Dependencies</span>
+</h2>
+<ul><li><code class="inline">gun</code> - Modern HTTP/2 client for ACME communication</li><li><code class="inline">crypto</code> - Cryptographic operations</li><li><code class="inline">public_key</code> - Public key operations</li><li><code class="inline">ssl</code> - SSL/TLS support</li><li><code class="inline">inets</code> - Additional HTTP utilities</li></ul><h2 id="code-coverage" class="section-heading">
+  <a href="#code-coverage" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Code Coverage</span>
+</h2>
+<p>Current test coverage across all modules:</p><table><thead><tr><th style="text-align: left;">Module</th><th style="text-align: left;">Coverage</th></tr></thead><tbody><tr><td style="text-align: left;"><strong>Core Modules</strong></td><td style="text-align: left;"></td></tr><tr><td style="text-align: left;"><code class="inline">acme_client</code></td><td style="text-align: left;">25%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_crypto</code></td><td style="text-align: left;">65%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_csr</code></td><td style="text-align: left;">81%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_http</code></td><td style="text-align: left;">49%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_protocol</code></td><td style="text-align: left;">26%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_url</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_challenge</code></td><td style="text-align: left;">18%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_ops</code></td><td style="text-align: left;">24%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_state</code></td><td style="text-align: left;">65%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_validation</code></td><td style="text-align: left;">95%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_utils</code></td><td style="text-align: left;">29%</td></tr><tr><td style="text-align: left;"><strong>Test Modules</strong></td><td style="text-align: left;"></td></tr><tr><td style="text-align: left;"><code class="inline">acme_client_tests</code></td><td style="text-align: left;">91%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_crypto_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_csr_tests</code></td><td style="text-align: left;">91%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_http_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_protocol_tests</code></td><td style="text-align: left;">91%</td></tr><tr><td style="text-align: left;"><code class="inline">acme_url_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_challenge_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_integration_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_ops_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_state_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_test_suite</code></td><td style="text-align: left;">10%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_cert_validation_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><code class="inline">ssl_utils_tests</code></td><td style="text-align: left;">100%</td></tr><tr><td style="text-align: left;"><strong>Total Coverage</strong></td><td style="text-align: left;"><strong>68%</strong></td></tr></tbody></table><h3 id="coverage-analysis" class="section-heading">
+  <a href="#coverage-analysis" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Coverage Analysis</span>
+</h3>
+<ul><li><strong>High Coverage (80%+)</strong>: <code class="inline">acme_csr</code>, <code class="inline">acme_url</code>, <code class="inline">ssl_cert_validation</code></li><li><strong>Medium Coverage (50-79%)</strong>: <code class="inline">acme_crypto</code>, <code class="inline">ssl_cert_state</code></li><li><strong>Low Coverage (&lt;50%)</strong>: <code class="inline">acme_client</code>, <code class="inline">acme_http</code>, <code class="inline">acme_protocol</code>, <code class="inline">ssl_cert_challenge</code>, <code class="inline">ssl_cert_ops</code>, <code class="inline">ssl_utils</code></li></ul><h2 id="development-commands" class="section-heading">
+  <a href="#development-commands" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Development Commands</span>
+</h2>
+<h3 id="code-quality-and-formatting" class="section-heading">
+  <a href="#code-quality-and-formatting" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Code Quality and Formatting</span>
+</h3>
+<pre><code class="makeup bash" translate="no"><span class=""># Format all Erlang files
+</span><span class="">rebar3 fmt
+</span><span class="">
+</span><span class=""># Check if files need formatting (don&#39;t modify)
+</span><span class="">rebar3 fmt --check
+</span><span class="">
+</span><span class=""># Run linter to check code quality
+</span><span class="">rebar3 lint
+</span></code></pre><h3 id="testing" class="section-heading">
+  <a href="#testing" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Testing</span>
+</h3>
+<pre><code class="makeup bash" translate="no"><span class=""># Compile and run all tests
+</span><span class="">rebar3 as test eunit
+</span><span class="">
+</span><span class=""># Run specific test module
+</span><span class="">rebar3 as test eunit --module=my_module_tests
+</span></code></pre><h3 id="code-coverage-1" class="section-heading">
+  <a href="#code-coverage-1" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Code Coverage</span>
+</h3>
+<pre><code class="makeup bash" translate="no"><span class=""># Run tests with coverage analysis
+</span><span class="">rebar3 cover
+</span><span class="">
+</span><span class=""># Generate coverage reports
+</span><span class="">rebar3 covertool generate
+</span><span class="">
+</span><span class=""># Full test and coverage workflow
+</span><span class="">rebar3 as test eunit &amp;&amp; rebar3 cover &amp;&amp; rebar3 covertool generate
+</span></code></pre><h3 id="development-workflow" class="section-heading">
+  <a href="#development-workflow" class="hover-link">
+    <i class="ri-link-m" aria-hidden="true"></i>
+  </a>
+  <span class="text">Development Workflow</span>
+</h3>
+<pre><code class="makeup bash" translate="no"><span class=""># Complete quality check before commit
+</span><span class="">rebar3 clean
+</span><span class="">rebar3 fmt --check
+</span><span class="">rebar3 lint
+</span><span class="">rebar3 as test compile
+</span><span class="">rebar3 as test eunit
+</span><span class="">rebar3 cover
+</span><span class="">rebar3 covertool generate
+</span></code></pre>
+</div>
+
+<div class="bottom-actions" id="bottom-actions">
+  <div class="bottom-actions-item">
+
+      <a href="api-reference.html" class="bottom-actions-button" rel="prev">
+        <span class="subheader">
+          ← Previous Page
+        </span>
+        <span class="title">
+API Reference
+        </span>
+      </a>
+
+  </div>
+  <div class="bottom-actions-item">
+
+      <a href="license.html" class="bottom-actions-button" rel="next">
+        <span class="subheader">
+          Next Page →
+        </span>
+        <span class="title">
+License
+        </span>
+      </a>
+
+  </div>
+</div>
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/ssl_cert/1.0.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/ssl_cert/1.0.0">Hex Preview</a>
+
+              (<a href="https://preview.hex.pm/preview/ssl_cert/1.0.0/show/README.md">current file</a>)
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="ssl_cert.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.35.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

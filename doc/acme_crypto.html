@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.35.1">
+    <meta name="project" content="ssl_cert v1.0.0">
+
+
+    <title>acme_crypto — ssl_cert v1.0.0</title>
+    <link rel="stylesheet" href="dist/html-erlang-4IXSOGMD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-67DEDFE0.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-PVRIOB7F.js"></script>
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+ssl_cert
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of ssl_cert</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+    <span translate="no">acme_crypto</span> 
+    <small class="app-vsn" translate="no">(ssl_cert v1.0.0)</small>
+
+  </h1>
+
+
+    <section id="moduledoc">
+<p>ACME cryptography module.</p><p>This module provides cryptographic operations for ACME (Automatic Certificate
+Management Environment) protocol implementation. It handles RSA key generation,
+JWK (JSON Web Key) operations, JWS (JSON Web Signature) creation, and various
+encoding/decoding utilities required for secure ACME communication.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#base64url_decode/1" data-no-tooltip translate="no">base64url_decode/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Decodes base64url encoded data.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#base64url_encode/1" data-no-tooltip translate="no">base64url_encode/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Encodes data using base64url encoding.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_jws_header/4" data-no-tooltip translate="no">create_jws_header(Url, PrivateKey, Kid, Nonce)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a JWS header for ACME requests.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_jws_signature/3" data-no-tooltip translate="no">create_jws_signature(HeaderB64, PayloadB64, PrivateKey)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a JWS signature for the given header and payload.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#generate_dns_txt_value/1" data-no-tooltip translate="no">generate_dns_txt_value(KeyAuthorization)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generates the DNS TXT record value from key authorization.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#generate_key_authorization/2" data-no-tooltip translate="no">generate_key_authorization(Token, PrivateKey)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generates the key authorization string for a challenge.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#get_jwk_thumbprint/1" data-no-tooltip translate="no">get_jwk_thumbprint(PrivateKey)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Computes the JWK thumbprint for an RSA private key.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#private_key_to_jwk/1" data-no-tooltip translate="no">private_key_to_jwk/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Converts an RSA private key to JWK (JSON Web Key) format.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#sign_data/3" data-no-tooltip translate="no">sign_data/3</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Signs data with the specified algorithm and private key.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="base64url_decode/1">
+
+  <div class="detail-header">
+    <a href="#base64url_decode/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">base64url_decode/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L133" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> base64url_decode(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Decodes base64url encoded data.</p><p>This function decodes base64url encoded strings back to binary data.
+It handles the URL-safe character set and adds padding if necessary.</p><p>@param Data The base64url-encoded string
+@returns The decoded binary data</p>
+  </section>
+</section>
+<section class="detail" id="base64url_encode/1">
+
+  <div class="detail-header">
+    <a href="#base64url_encode/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">base64url_encode/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L111" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> base64url_encode(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() | <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Encodes data using base64url encoding.</p><p>This function implements base64url encoding as specified in RFC 4648,
+which is required for JWS and other ACME protocol components. It differs
+from standard base64 by using URL-safe characters and omitting padding.</p><p>@param Data The data to encode (binary or string)
+@returns The base64url-encoded string</p>
+  </section>
+</section>
+<section class="detail" id="create_jws_header/4">
+
+  <div class="detail-header">
+    <a href="#create_jws_header/4" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">create_jws_header(Url, PrivateKey, Kid, Nonce)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L158" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> create_jws_header(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>() | undefined, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>().</pre>
+
+      </div>
+
+<p>Creates a JWS header for ACME requests.</p><p>This function creates the protected header for JWS (JSON Web Signature)
+requests as required by the ACME protocol. It handles both new account
+creation (using JWK) and existing account requests (using KID).</p><p>@param Url The target URL for the request
+@param PrivateKey The account's private key
+@param Kid The account's key identifier (undefined for new accounts)
+@param Nonce The fresh nonce from the ACME server
+@returns A map representing the JWS header</p>
+  </section>
+</section>
+<section class="detail" id="create_jws_signature/3">
+
+  <div class="detail-header">
+    <a href="#create_jws_signature/3" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">create_jws_signature(HeaderB64, PayloadB64, PrivateKey)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L183" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> create_jws_signature(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Creates a JWS signature for the given header and payload.</p><p>This function creates a JWS signature by signing the concatenated
+base64url-encoded header and payload with the private key using
+RS256 (RSA with SHA-256).</p><p>@param HeaderB64 The base64url-encoded header
+@param PayloadB64 The base64url-encoded payload
+@param PrivateKey The private key for signing
+@returns The base64url-encoded signature</p>
+  </section>
+</section>
+<section class="detail" id="generate_dns_txt_value/1">
+
+  <div class="detail-header">
+    <a href="#generate_dns_txt_value/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">generate_dns_txt_value(KeyAuthorization)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L97" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> generate_dns_txt_value(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Generates the DNS TXT record value from key authorization.</p><p>This function creates the value that should be placed in a DNS TXT record
+for DNS-01 challenge validation. It computes the SHA-256 hash of the
+key authorization string and encodes it using base64url.</p><p>@param KeyAuthorization The key authorization string
+@returns The base64url-encoded SHA-256 hash for the DNS TXT record</p>
+  </section>
+</section>
+<section class="detail" id="generate_key_authorization/2">
+
+  <div class="detail-header">
+    <a href="#generate_key_authorization/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">generate_key_authorization(Token, PrivateKey)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L83" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> generate_key_authorization(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Generates the key authorization string for a challenge.</p><p>This function creates the key authorization string required for ACME
+challenges by concatenating the challenge token with the JWK thumbprint.
+This is used in DNS-01 and other challenge types.</p><p>@param Token The challenge token from the ACME server
+@param PrivateKey The account's private key
+@returns The key authorization string (Token.JWK_Thumbprint)</p>
+  </section>
+</section>
+<section class="detail" id="get_jwk_thumbprint/1">
+
+  <div class="detail-header">
+    <a href="#get_jwk_thumbprint/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">get_jwk_thumbprint(PrivateKey)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L66" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> get_jwk_thumbprint(<a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Computes the JWK thumbprint for an RSA private key.</p><p>This function creates a JWK thumbprint according to RFC 7638, which is
+used in ACME protocol for key identification and challenge generation.
+The thumbprint is computed by hashing the canonical JSON representation
+of the JWK.</p><p>@param PrivateKey The RSA private key
+@returns The base64url-encoded JWK thumbprint as string</p>
+  </section>
+</section>
+<section class="detail" id="private_key_to_jwk/1">
+
+  <div class="detail-header">
+    <a href="#private_key_to_jwk/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">private_key_to_jwk/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L48" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> private_key_to_jwk(<a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>().</pre>
+
+      </div>
+
+<p>Converts an RSA private key to JWK (JSON Web Key) format.</p><p>This function extracts the public key components (modulus and exponent)
+from an RSA private key and formats them according to RFC 7517 JWK
+specification for use in ACME protocol communication.</p><p>@param PrivateKey The RSA private key record
+@returns A map representing the JWK with required fields</p>
+  </section>
+</section>
+<section class="detail" id="sign_data/3">
+
+  <div class="detail-header">
+    <a href="#sign_data/3" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">sign_data/3</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_crypto.erl#L199" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> sign_data(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() | <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:atom/0">atom</a>(), <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Signs data with the specified algorithm and private key.</p><p>This function provides a general-purpose signing interface for
+various cryptographic operations needed in ACME protocol.</p><p>@param Data The data to sign (binary or string)
+@param Algorithm The signing algorithm (e.g., sha256)
+@param PrivateKey The private key for signing
+@returns The signature as binary</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/ssl_cert/1.0.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/ssl_cert/1.0.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="ssl_cert.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.35.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

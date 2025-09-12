@@ -13,5 +13,6 @@
     ]},
     {env, []},
     {modules, []},
+    {licenses, ["MIT"]},
     {links, [{"GitHub", "https://github.com/permaweb/ssl_cert"}]}
 ]}.

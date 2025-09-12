@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.35.1">
+    <meta name="project" content="ssl_cert v1.0.0">
+
+
+    <title>ssl_cert_ops — ssl_cert v1.0.0</title>
+    <link rel="stylesheet" href="dist/html-erlang-4IXSOGMD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-67DEDFE0.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-PVRIOB7F.js"></script>
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+ssl_cert
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of ssl_cert</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_ops.erl#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+    <span translate="no">ssl_cert_ops</span> 
+    <small class="app-vsn" translate="no">(ssl_cert v1.0.0)</small>
+
+  </h1>
+
+
+    <section id="moduledoc">
+<p>SSL Certificate operations module.</p><p>This module handles certificate-related operations including downloading
+certificates from Let's Encrypt, processing certificate chains, and
+managing certificate storage and retrieval.</p><p>The module provides functions for the complete certificate lifecycle
+from download to storage and cleanup operations.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_account/0" data-no-tooltip translate="no">acme_account()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME account record containing private key, URL, and key ID.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_environment/0" data-no-tooltip translate="no">acme_environment()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME environment type - staging or production.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_order/0" data-no-tooltip translate="no">acme_order()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME order record containing order details and status.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:dns_challenge/0" data-no-tooltip translate="no">dns_challenge()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>DNS challenge record for domain validation.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:domain_list/0" data-no-tooltip translate="no">domain_list()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>List of domain names as strings.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:email_address/0" data-no-tooltip translate="no">email_address()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Email address as a string.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:request_state/0" data-no-tooltip translate="no">request_state()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Request state map with binary keys and arbitrary values.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:validation_result/0" data-no-tooltip translate="no">validation_result()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validation result map with binary keys and values.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#delete_certificate/2" data-no-tooltip translate="no">delete_certificate(Domains, Opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deletes a stored SSL certificate.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#download_certificate_state/2" data-no-tooltip translate="no">download_certificate_state(State, Opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Downloads a certificate from Let's Encrypt using the request state.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#extract_end_entity_cert/1" data-no-tooltip translate="no">extract_end_entity_cert(CertPem)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Extracts only the end-entity certificate from a PEM chain.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#process_certificate_request/2" data-no-tooltip translate="no">process_certificate_request(ValidatedParams, Wallet)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Processes a validated certificate request by creating ACME components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#renew_certificate/2" data-no-tooltip translate="no">renew_certificate(Domains, Opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Renews an existing SSL certificate.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:acme_account/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_account/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_account()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L80" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_account() :: #acme_account{key :: <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>(), url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), kid :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>ACME account record containing private key, URL, and key ID.</p>
+  </section>
+</section>
+<section class="detail" id="t:acme_environment/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_environment/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_environment()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L86" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_environment() :: staging | production.</pre>
+
+      </div>
+
+<p>ACME environment type - staging or production.</p>
+  </section>
+</section>
+<section class="detail" id="t:acme_order/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_order/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_order()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L82" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_order() ::
+          #acme_order{url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      status :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      expires :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      identifiers :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:list/0">list</a>(),
+                      authorizations :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:list/0">list</a>(),
+                      finalize :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      certificate :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>ACME order record containing order details and status.</p>
+  </section>
+</section>
+<section class="detail" id="t:dns_challenge/0">
+
+  <div class="detail-header">
+    <a href="#t:dns_challenge/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">dns_challenge()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L84" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> dns_challenge() ::
+          #dns_challenge{domain :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         token :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         key_authorization :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         dns_value :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>DNS challenge record for domain validation.</p>
+  </section>
+</section>
+<section class="detail" id="t:domain_list/0">
+
+  <div class="detail-header">
+    <a href="#t:domain_list/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">domain_list()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L88" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> domain_list() :: [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()].</pre>
+
+      </div>
+
+<p>List of domain names as strings.</p>
+  </section>
+</section>
+<section class="detail" id="t:email_address/0">
+
+  <div class="detail-header">
+    <a href="#t:email_address/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">email_address()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L90" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> email_address() :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Email address as a string.</p>
+  </section>
+</section>
+<section class="detail" id="t:request_state/0">
+
+  <div class="detail-header">
+    <a href="#t:request_state/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">request_state()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L94" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> request_state() :: #{<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Request state map with binary keys and arbitrary values.</p>
+  </section>
+</section>
+<section class="detail" id="t:validation_result/0">
+
+  <div class="detail-header">
+    <a href="#t:validation_result/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validation_result()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L92" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> validation_result() :: #{<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Validation result map with binary keys and values.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="delete_certificate/2">
+
+  <div class="detail-header">
+    <a href="#delete_certificate/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">delete_certificate(Domains, Opts)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_ops.erl#L235" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> delete_certificate(<a href="#t:domain_list/0">domain_list</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()}.</pre>
+
+      </div>
+
+<p>Deletes a stored SSL certificate.</p><p>This function removes certificate data associated with the specified domains.
+In the current implementation, this is a simulated operation that logs
+the deletion request.</p><p>@param Domains List of domain names to delete
+@param _Opts Configuration options (currently unused)
+@returns {ok, DeletionResponse} or {error, ErrorResponse}</p>
+  </section>
+</section>
+<section class="detail" id="download_certificate_state/2">
+
+  <div class="detail-header">
+    <a href="#download_certificate_state/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">download_certificate_state(State, Opts)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_ops.erl#L47" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> download_certificate_state(<a href="#t:request_state/0">request_state</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()}.</pre>
+
+      </div>
+
+<p>Downloads a certificate from Let's Encrypt using the request state.</p><p>This function extracts the necessary information from the request state,
+downloads the certificate from Let's Encrypt, and returns the certificate
+in PEM format along with metadata.</p><p>@param State The current request state containing order information
+@param _Opts Configuration options (currently unused)
+@returns {ok, DownloadResponse} or {error, ErrorResponse}</p>
+  </section>
+</section>
+<section class="detail" id="extract_end_entity_cert/1">
+
+  <div class="detail-header">
+    <a href="#extract_end_entity_cert/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">extract_end_entity_cert(CertPem)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_ops.erl#L281" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> extract_end_entity_cert(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Extracts only the end-entity certificate from a PEM chain.</p><p>This function parses a PEM certificate chain and returns only the
+end-entity (leaf) certificate, which is typically the first certificate
+in the chain.</p><p>@param CertPem Full certificate chain in PEM format
+@returns Only the end-entity certificate in PEM format</p>
+  </section>
+</section>
+<section class="detail" id="process_certificate_request/2">
+
+  <div class="detail-header">
+    <a href="#process_certificate_request/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">process_certificate_request(ValidatedParams, Wallet)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_ops.erl#L109" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> process_certificate_request(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()}.</pre>
+
+      </div>
+
+<p>Processes a validated certificate request by creating ACME components.</p><p>This function orchestrates the certificate request process:</p><ol><li>Creates an ACME account with Let's Encrypt</li><li>Submits a certificate order</li><li>Generates DNS challenges</li><li>Creates and returns the request state</li></ol><p>@param ValidatedParams Map of validated request parameters
+@param Wallet Wallet record
+@returns {ok, Map} with request details or {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="renew_certificate/2">
+
+  <div class="detail-header">
+    <a href="#renew_certificate/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">renew_certificate(Domains, Opts)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_ops.erl#L191" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> renew_certificate(<a href="#t:domain_list/0">domain_list</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()}.</pre>
+
+      </div>
+
+<p>Renews an existing SSL certificate.</p><p>This function initiates renewal for an existing certificate by creating
+a new certificate request with the same parameters as the original.
+It reads the configuration from the provided options and creates a new
+certificate request.</p><p>@param Domains List of domain names to renew
+@param Opts Configuration options containing SSL settings
+@returns {ok, RenewalResponse} or {error, ErrorResponse}</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/ssl_cert/1.0.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/ssl_cert/1.0.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="ssl_cert.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.35.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

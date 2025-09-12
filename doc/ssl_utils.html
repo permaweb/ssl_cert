@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.35.1">
+    <meta name="project" content="ssl_cert v1.0.0">
+
+
+    <title>ssl_utils — ssl_cert v1.0.0</title>
+    <link rel="stylesheet" href="dist/html-erlang-4IXSOGMD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-67DEDFE0.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-PVRIOB7F.js"></script>
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+ssl_cert
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of ssl_cert</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+    <span translate="no">ssl_utils</span> 
+    <small class="app-vsn" translate="no">(ssl_cert v1.0.0)</small>
+
+  </h1>
+
+
+    <section id="moduledoc">
+<p>SSL Certificate utility module.</p><p>This module provides utility functions for SSL certificate management
+including error formatting, response building, and common helper functions
+used across the SSL certificate system.</p><p>The module centralizes formatting logic and provides consistent error
+handling and response generation for the SSL certificate system.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#bin/1" data-no-tooltip translate="no">bin/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Coerce a value to a binary.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#build_error_response/2" data-no-tooltip translate="no">build_error_response(StatusCode, ErrorMessage)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Builds a standardized error response.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#build_success_response/2" data-no-tooltip translate="no">build_success_response(StatusCode, Body)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Builds a standardized success response.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#format_error_details/1" data-no-tooltip translate="no">format_error_details(ErrorReason)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Formats error details for user-friendly display.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#format_validation_error/1" data-no-tooltip translate="no">format_validation_error(ValidationError)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Formats validation errors for consistent API responses.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#http_get/1" data-no-tooltip translate="no">http_get(Url)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Makes an HTTP GET request using gun.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#http_head/1" data-no-tooltip translate="no">http_head(Url)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Makes an HTTP HEAD request using gun.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#http_post/3" data-no-tooltip translate="no">http_post(Url, Headers, Body)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Makes an HTTP POST request using gun.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#json_decode/1" data-no-tooltip translate="no">json_decode(Bin)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Takes a JSON string and decodes it into an Erlang term.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#json_decode/2" data-no-tooltip translate="no">json_decode(Bin, Opts)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Takes a JSON string and decodes it into an Erlang term.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#json_encode/1" data-no-tooltip translate="no">json_encode(Term)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Takes a term in Erlang's native form and encodes it as a JSON string.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#list/1" data-no-tooltip translate="no">list/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Coerce a value to a string list.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#normalize_domains/1" data-no-tooltip translate="no">normalize_domains/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Normalizes domain input to a list of strings.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#normalize_email/1" data-no-tooltip translate="no">normalize_email/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Normalizes email input to a string.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="bin/1">
+
+  <div class="detail-header">
+    <a href="#bin/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">bin/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L300" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> bin(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Coerce a value to a binary.</p>
+  </section>
+</section>
+<section class="detail" id="build_error_response/2">
+
+  <div class="detail-header">
+    <a href="#build_error_response/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">build_error_response(StatusCode, ErrorMessage)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L106" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> build_error_response(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()}.</pre>
+
+      </div>
+
+<p>Builds a standardized error response.</p><p>@param StatusCode HTTP status code
+@param ErrorMessage Error message as binary
+@returns Standardized error response tuple</p>
+  </section>
+</section>
+<section class="detail" id="build_success_response/2">
+
+  <div class="detail-header">
+    <a href="#build_success_response/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">build_success_response(StatusCode, Body)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L118" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> build_success_response(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()}.</pre>
+
+      </div>
+
+<p>Builds a standardized success response.</p><p>@param StatusCode HTTP status code
+@param Body Response body map
+@returns Standardized success response tuple</p>
+  </section>
+</section>
+<section class="detail" id="format_error_details/1">
+
+  <div class="detail-header">
+    <a href="#format_error_details/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">format_error_details(ErrorReason)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L63" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> format_error_details(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Formats error details for user-friendly display.</p><p>This function takes various error reason formats and converts them
+to user-friendly binary strings suitable for API responses.</p><p>@param ErrorReason The error reason to format
+@returns Formatted error details as binary</p>
+  </section>
+</section>
+<section class="detail" id="format_validation_error/1">
+
+  <div class="detail-header">
+    <a href="#format_validation_error/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">format_validation_error(ValidationError)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L127" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> format_validation_error(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()}.</pre>
+
+      </div>
+
+<p>Formats validation errors for consistent API responses.</p><p>@param ValidationError Validation error message
+@returns Formatted validation error response</p>
+  </section>
+</section>
+<section class="detail" id="http_get/1">
+
+  <div class="detail-header">
+    <a href="#http_get/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">http_get(Url)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L198" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> http_get(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>(), [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:tuple/0">tuple</a>()], <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Makes an HTTP GET request using gun.</p><p>@param Url The target URL (string or binary)
+@returns {ok, StatusCode, ResponseHeaders, ResponseBody} | {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="http_head/1">
+
+  <div class="detail-header">
+    <a href="#http_head/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">http_head(Url)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L212" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> http_head(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>(), [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:tuple/0">tuple</a>()], <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Makes an HTTP HEAD request using gun.</p><p>@param Url The target URL (string or binary)
+@returns {ok, StatusCode, ResponseHeaders, ResponseBody} | {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="http_post/3">
+
+  <div class="detail-header">
+    <a href="#http_post/3" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">http_post(Url, Headers, Body)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L184" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> http_post(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:tuple/0">tuple</a>()], <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>(), [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:tuple/0">tuple</a>()], <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Makes an HTTP POST request using gun.</p><p>@param Url The target URL (string or binary)
+@param Headers List of header tuples
+@param Body Request body as binary
+@returns {ok, StatusCode, ResponseHeaders, ResponseBody} | {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="json_decode/1">
+
+  <div class="detail-header">
+    <a href="#json_decode/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">json_decode(Bin)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L330" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> json_decode(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>().</pre>
+
+      </div>
+
+<p>Takes a JSON string and decodes it into an Erlang term.</p>
+  </section>
+</section>
+<section class="detail" id="json_decode/2">
+
+  <div class="detail-header">
+    <a href="#json_decode/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">json_decode(Bin, Opts)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L335" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> json_decode(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>().</pre>
+
+      </div>
+
+<p>Takes a JSON string and decodes it into an Erlang term.</p>
+  </section>
+</section>
+<section class="detail" id="json_encode/1">
+
+  <div class="detail-header">
+    <a href="#json_encode/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">json_encode(Term)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L324" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> json_encode(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Takes a term in Erlang's native form and encodes it as a JSON string.</p>
+  </section>
+</section>
+<section class="detail" id="list/1">
+
+  <div class="detail-header">
+    <a href="#list/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">list/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L314" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> list(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:list/0">list</a>().</pre>
+
+      </div>
+
+<p>Coerce a value to a string list.</p>
+  </section>
+</section>
+<section class="detail" id="normalize_domains/1">
+
+  <div class="detail-header">
+    <a href="#normalize_domains/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">normalize_domains/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L139" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> normalize_domains(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()].</pre>
+
+      </div>
+
+<p>Normalizes domain input to a list of strings.</p><p>This function handles various input formats for domains and converts
+them to a consistent list of strings format.</p><p>@param Domains Domain input in various formats
+@returns List of domain strings</p>
+  </section>
+</section>
+<section class="detail" id="normalize_email/1">
+
+  <div class="detail-header">
+    <a href="#normalize_email/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">normalize_email/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_utils.erl#L165" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> normalize_email(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Normalizes email input to a string.</p><p>This function handles various input formats for email addresses and
+converts them to a consistent string format.</p><p>@param Email Email input in various formats
+@returns Email as string</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/ssl_cert/1.0.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/ssl_cert/1.0.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="ssl_cert.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.35.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

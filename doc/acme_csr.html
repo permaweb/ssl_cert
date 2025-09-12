@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.35.1">
+    <meta name="project" content="ssl_cert v1.0.0">
+
+
+    <title>acme_csr — ssl_cert v1.0.0</title>
+    <link rel="stylesheet" href="dist/html-erlang-4IXSOGMD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-67DEDFE0.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-PVRIOB7F.js"></script>
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+ssl_cert
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of ssl_cert</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+    <span translate="no">acme_csr</span> 
+    <small class="app-vsn" translate="no">(ssl_cert v1.0.0)</small>
+
+  </h1>
+
+
+    <section id="moduledoc">
+<p>ACME Certificate Signing Request (CSR) generation module.</p><p>This module handles the complex process of generating Certificate Signing
+Requests (CSRs) for ACME certificate issuance. It manages ASN.1 encoding,
+X.509 certificate request formatting, Subject Alternative Name (SAN) extensions,
+and proper handling of both DNS names and IP addresses.</p><p>The module provides comprehensive CSR generation with support for multiple
+domains, proper ASN.1 structure creation, and compatibility with various
+Certificate Authorities including Let's Encrypt.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_complete_rsa_key_from_wallet/3" data-no-tooltip translate="no">create_complete_rsa_key_from_wallet(Modulus, PublicExponent, PrivateExponent)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a complete RSA private key from wallet components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_extension_request_attribute/1" data-no-tooltip translate="no">create_extension_request_attribute(Extension)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates an extension request attribute for CSR.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_subject/1" data-no-tooltip translate="no">create_subject(CommonName)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates the certificate subject with Common Name.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_subject_alt_name_extension/1" data-no-tooltip translate="no">create_subject_alt_name_extension(Domains)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a Subject Alternative Name extension for multiple domains.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#generate_csr/2" data-no-tooltip translate="no">generate_csr(Domains, RSAPrivKey)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Generates a Certificate Signing Request for the specified domains.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#generate_csr_internal/2" data-no-tooltip translate="no">generate_csr_internal(Domains0, RSAPrivKey)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Internal CSR generation with comprehensive error handling.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#ip_address_to_binary/1" data-no-tooltip translate="no">ip_address_to_binary(IPBinary)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Converts an IP address string to binary format.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#is_ip_address/1" data-no-tooltip translate="no">is_ip_address(Domain)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Checks if a domain string represents an IP address.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#normalize_asn1_params/1" data-no-tooltip translate="no">normalize_asn1_params/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Normalizes ASN.1 algorithm parameters for compatibility.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#normalize_domain/1" data-no-tooltip translate="no">normalize_domain/1</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Normalizes a domain name to binary format.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_all_domains/1" data-no-tooltip translate="no">validate_all_domains(Domains)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates all domains in a list.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_domains/1" data-no-tooltip translate="no">validate_domains(Domains0)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates and normalizes a list of domain names.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#validate_single_domain/1" data-no-tooltip translate="no">validate_single_domain(Domain)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validates a single domain name.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="create_complete_rsa_key_from_wallet/3">
+
+  <div class="detail-header">
+    <a href="#create_complete_rsa_key_from_wallet/3" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">create_complete_rsa_key_from_wallet(Modulus, PublicExponent, PrivateExponent)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L377" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> create_complete_rsa_key_from_wallet(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>(), <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:integer/0">integer</a>()) ->
+                                             <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:rsa_private_key/0">public_key:rsa_private_key</a>().</pre>
+
+      </div>
+
+<p>Creates a complete RSA private key from wallet components.</p><p>This function takes the basic RSA components from the wallet and creates
+a complete RSA private key that can be properly serialized. It computes
+the missing prime factors and coefficients needed for full compatibility.</p><p>@param Modulus The RSA modulus (n)
+@param PublicExponent The public exponent (e)
+@param PrivateExponent The private exponent (d)
+@returns Complete RSA private key record</p>
+  </section>
+</section>
+<section class="detail" id="create_extension_request_attribute/1">
+
+  <div class="detail-header">
+    <a href="#create_extension_request_attribute/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">create_extension_request_attribute(Extension)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L281" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> create_extension_request_attribute(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>().</pre>
+
+      </div>
+
+<p>Creates an extension request attribute for CSR.</p><p>This function creates the pkcs-9-at-extensionRequest attribute
+that contains the X.509 extensions for the certificate request.</p><p>@param Extension The X.509 extension to include
+@returns Attribute structure for the CSR</p>
+  </section>
+</section>
+<section class="detail" id="create_subject/1">
+
+  <div class="detail-header">
+    <a href="#create_subject/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">create_subject(CommonName)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L168" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> create_subject(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>().</pre>
+
+      </div>
+
+<p>Creates the certificate subject with Common Name.</p><p>This function creates the X.509 certificate subject structure with
+the specified Common Name. The subject is formatted according to
+ASN.1 Distinguished Name encoding requirements.</p><p>@param CommonName The domain name to use as Common Name
+@returns ASN.1 encoded subject structure</p>
+  </section>
+</section>
+<section class="detail" id="create_subject_alt_name_extension/1">
+
+  <div class="detail-header">
+    <a href="#create_subject_alt_name_extension/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">create_subject_alt_name_extension(Domains)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L188" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> create_subject_alt_name_extension([<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()]) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>().</pre>
+
+      </div>
+
+<p>Creates a Subject Alternative Name extension for multiple domains.</p><p>This function creates an X.509 Subject Alternative Name extension
+containing all the domains for the certificate. It properly handles
+both DNS names and IP addresses according to RFC 5280.</p><p>@param Domains List of domain names and/or IP addresses
+@returns X.509 Extension structure for Subject Alternative Names</p>
+  </section>
+</section>
+<section class="detail" id="generate_csr/2">
+
+  <div class="detail-header">
+    <a href="#generate_csr/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">generate_csr(Domains, RSAPrivKey)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L69" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> generate_csr([<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()], <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>(), <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Generates a Certificate Signing Request for the specified domains.</p><p>This is the main entry point for CSR generation. It validates the input
+domains, extracts the RSA key material from the wallet, and creates a
+properly formatted X.509 certificate request with Subject Alternative Names.</p><p>@param Domains List of domain names for the certificate
+@param RSAPrivKey RSA private key
+@returns {ok, CSR_DER, PrivateKey} on success, {error, Reason} on failure</p>
+  </section>
+</section>
+<section class="detail" id="generate_csr_internal/2">
+
+  <div class="detail-header">
+    <a href="#generate_csr_internal/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">generate_csr_internal(Domains0, RSAPrivKey)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L86" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> generate_csr_internal([<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()], <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) ->
+                               {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>(), <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Internal CSR generation with comprehensive error handling.</p><p>This function performs the complete CSR generation process:</p><ol><li>Validates and normalizes domain names</li><li>Extracts RSA key material from the wallet</li><li>Creates the certificate request structure</li><li>Handles Subject Alternative Name extensions</li><li>Signs the request with the private key</li></ol><p>@param Domains0 List of domain names (may contain empty strings)
+@param RSAPrivKey RSA private key
+@returns {ok, CSR_DER, PrivateKey} on success, {error, Reason} on failure</p>
+  </section>
+</section>
+<section class="detail" id="ip_address_to_binary/1">
+
+  <div class="detail-header">
+    <a href="#ip_address_to_binary/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">ip_address_to_binary(IPBinary)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L309" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> ip_address_to_binary(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Converts an IP address string to binary format.</p><p>This function converts IP address strings to the binary format
+required for X.509 iPAddress GeneralName entries.</p><p>@param IPBinary The IP address as binary string
+@returns Binary representation of the IP address</p>
+  </section>
+</section>
+<section class="detail" id="is_ip_address/1">
+
+  <div class="detail-header">
+    <a href="#is_ip_address/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">is_ip_address(Domain)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L294" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> is_ip_address(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:boolean/0">boolean</a>().</pre>
+
+      </div>
+
+<p>Checks if a domain string represents an IP address.</p><p>@param Domain The domain string to check
+@returns true if it's an IP address, false if it's a DNS name</p>
+  </section>
+</section>
+<section class="detail" id="normalize_asn1_params/1">
+
+  <div class="detail-header">
+    <a href="#normalize_asn1_params/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">normalize_asn1_params/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L257" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> normalize_asn1_params(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>().</pre>
+
+      </div>
+
+<p>Normalizes ASN.1 algorithm parameters for compatibility.</p><p>Some OTP versions require OPEN TYPE wrapping for AlgorithmIdentifier
+parameters. This function ensures compatibility across different versions.</p><p>@param Params The original parameters
+@returns Normalized parameters</p>
+  </section>
+</section>
+<section class="detail" id="normalize_domain/1">
+
+  <div class="detail-header">
+    <a href="#normalize_domain/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">normalize_domain/1</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L239" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> normalize_domain(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>() | <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>().</pre>
+
+      </div>
+
+<p>Normalizes a domain name to binary format.</p><p>@param Domain Domain name as string or binary
+@returns Normalized domain as binary</p>
+  </section>
+</section>
+<section class="detail" id="validate_all_domains/1">
+
+  <div class="detail-header">
+    <a href="#validate_all_domains/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validate_all_domains(Domains)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L347" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validate_all_domains(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> {ok, [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()]} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Validates all domains in a list.</p><p>This function validates each domain in the provided list and returns
+either all validated domains or the first validation error encountered.</p><p>@param Domains List of domains to validate
+@returns {ok, ValidatedDomains} or {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="validate_domains/1">
+
+  <div class="detail-header">
+    <a href="#validate_domains/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validate_domains(Domains0)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L212" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validate_domains([<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()]) -> {ok, [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()]} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Validates and normalizes a list of domain names.</p><p>This function validates domain names, removes empty strings,
+normalizes formats, and ensures at least one valid domain exists.</p><p>@param Domains0 List of domain names (may contain empty strings)
+@returns {ok, [NormalizedDomain]} or {error, Reason}</p>
+  </section>
+</section>
+<section class="detail" id="validate_single_domain/1">
+
+  <div class="detail-header">
+    <a href="#validate_single_domain/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validate_single_domain(Domain)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/acme_csr.erl#L330" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> validate_single_domain(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()) -> {ok, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()} | {error, <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Validates a single domain name.</p><p>This function performs basic validation on a single domain name
+to ensure it meets basic formatting requirements.</p><p>@param Domain The domain to validate
+@returns {ok, ValidatedDomain} or {error, {invalid_domain, Reason}}</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/ssl_cert/1.0.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/ssl_cert/1.0.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="ssl_cert.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.35.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>

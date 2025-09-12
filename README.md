@@ -243,6 +243,18 @@ rebar3 covertool generate
 rebar3 as test eunit && rebar3 cover && rebar3 covertool generate
 ```
 
+### Documentation and Publishing
+```bash
+# Generate HTML documentation
+rebar3 ex_doc
+
+# Authenticate with Hex (one-time setup)
+rebar3 hex user auth
+
+# Publish to Hex
+rebar3 hex publish
+```
+
 ### Development Workflow
 ```bash
 # Complete quality check before commit

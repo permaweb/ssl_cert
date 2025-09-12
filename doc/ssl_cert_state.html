@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.35.1">
+    <meta name="project" content="ssl_cert v1.0.0">
+
+
+    <title>ssl_cert_state — ssl_cert v1.0.0</title>
+    <link rel="stylesheet" href="dist/html-erlang-4IXSOGMD.css" />
+
+
+    <script src="dist/handlebars.runtime-NWIB6V2M.js"></script>
+    <script src="dist/handlebars.templates-K7URE6B4.js"></script>
+    <script src="dist/sidebar_items-67DEDFE0.js"></script>
+    <script src="docs_config.js"></script>
+    <script async src="dist/html-PVRIOB7F.js"></script>
+
+  </head>
+  <body data-type="modules" class="page-module">
+    <script>
+
+      try {
+        var settings = JSON.parse(localStorage.getItem('ex_doc:settings') || '{}');
+
+        if (settings.theme === 'dark' ||
+           ((settings.theme === 'system' || settings.theme == null) &&
+             window.matchMedia('(prefers-color-scheme: dark)').matches)
+           ) {
+          document.body.classList.add('dark')
+        }
+      } catch (error) { }
+    </script>
+
+<div class="body-wrapper">
+
+<button id="sidebar-menu" class="sidebar-button sidebar-toggle" aria-label="toggle sidebar" aria-controls="sidebar">
+  <i class="ri-menu-line ri-lg" title="Collapse/expand sidebar"></i>
+</button>
+
+<nav id="sidebar" class="sidebar">
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectInfo">
+
+      <div>
+        <a href="readme.html" class="sidebar-projectName" translate="no">
+ssl_cert
+        </a>
+        <div class="sidebar-projectVersion" translate="no">
+          v1.0.0
+        </div>
+      </div>
+    </div>
+    <ul id="sidebar-listNav" class="sidebar-listNav" role="tablist">
+      <li>
+        <button id="extras-list-tab-button" role="tab" data-type="extras" aria-controls="extras-tab-panel" aria-selected="true" tabindex="0">
+Pages
+        </button>
+      </li>
+
+        <li>
+          <button id="modules-list-tab-button" role="tab" data-type="modules" aria-controls="modules-tab-panel" aria-selected="false" tabindex="-1">
+            Modules
+          </button>
+        </li>
+
+
+    </ul>
+  </div>
+
+  <div id="extras-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="extras-list-tab-button">
+    <ul id="extras-full-list" class="full-list"></ul>
+  </div>
+
+    <div id="modules-tab-panel" class="sidebar-tabpanel" role="tabpanel" aria-labelledby="modules-list-tab-button" hidden>
+      <ul id="modules-full-list" class="full-list"></ul>
+    </div>
+
+
+</nav>
+
+<main class="content">
+  <output role="status" id="toast"></output>
+
+  <div id="content" class="content-inner">
+    <div class="top-search">
+      <div class="search-settings">
+        <form class="search-bar" action="search.html">
+          <label class="search-label">
+            <span class="sr-only">Search documentation of ssl_cert</span>
+            <input name="q" type="text" class="search-input" placeholder="Press / to search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          </label>
+          <button type="submit" class="search-button" aria-label="Submit Search">
+            <i class="ri-search-2-line ri-lg" aria-hidden="true" title="Submit search"></i>
+          </button>
+          <button type="button" tabindex="-1" class="search-close-button" aria-hidden="true">
+            <i class="ri-close-line ri-lg" title="Cancel search"></i>
+          </button>
+        </form>
+        <div class="autocomplete">
+        </div>
+        <button class="icon-settings display-settings">
+          <i class="ri-settings-3-line"></i>
+          <span class="sr-only">Settings</span>
+        </button>
+      </div>
+    </div>
+
+<div id="top-content">
+  <h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L1" title="View Source" class="icon-action" rel="help">
+        <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+        <span class="sr-only">View Source</span>
+      </a>
+
+    <span translate="no">ssl_cert_state</span> 
+    <small class="app-vsn" translate="no">(ssl_cert v1.0.0)</small>
+
+  </h1>
+
+
+    <section id="moduledoc">
+<p>SSL Certificate state management module.</p><p>This module handles all state management operations for SSL certificate
+requests including serialization, deserialization, persistence, and
+state transformations between internal records and external map formats.</p><p>The module provides a clean interface for storing and retrieving certificate
+request state while hiding the complexity of format conversions.</p>
+    </section>
+
+</div>
+
+  <section id="summary" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#summary">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Summary</span>
+    </h1>
+<div class="summary-types summary">
+  <h2>
+    <a href="#types">Types</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_account/0" data-no-tooltip translate="no">acme_account()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME account record containing private key, URL, and key ID.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_environment/0" data-no-tooltip translate="no">acme_environment()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME environment type - staging or production.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:acme_order/0" data-no-tooltip translate="no">acme_order()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>ACME order record containing order details and status.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:dns_challenge/0" data-no-tooltip translate="no">dns_challenge()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>DNS challenge record for domain validation.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:domain_list/0" data-no-tooltip translate="no">domain_list()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>List of domain names as strings.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:email_address/0" data-no-tooltip translate="no">email_address()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Email address as a string.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:request_state/0" data-no-tooltip translate="no">request_state()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Request state map with binary keys and arbitrary values.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#t:validation_result/0" data-no-tooltip translate="no">validation_result()</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Validation result map with binary keys and values.</p></div>
+
+    </div>
+
+</div>
+<div class="summary-functions summary">
+  <h2>
+    <a href="#functions">Functions</a>
+  </h2>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#create_request_state/4" data-no-tooltip translate="no">create_request_state(Account, Order, Challenges, ValidatedParams)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Creates a complete request state map from ACME components.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#deserialize_account/1" data-no-tooltip translate="no">deserialize_account(AccountMap)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deserializes an account map back to an ACME account record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#deserialize_challenges/1" data-no-tooltip translate="no">deserialize_challenges(ChallengeMaps)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deserializes a list of challenge maps back to DNS challenge records.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#deserialize_order/1" data-no-tooltip translate="no">deserialize_order(OrderMap)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deserializes an order map back to an ACME order record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#deserialize_private_key/1" data-no-tooltip translate="no">deserialize_private_key(PemKey)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Deserializes a PEM-encoded private key back to RSA record.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#extract_account_from_state/1" data-no-tooltip translate="no">extract_account_from_state(State)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Extracts and deserializes the account from request state.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#extract_challenges_from_state/1" data-no-tooltip translate="no">extract_challenges_from_state(State)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Extracts and deserializes the challenges from request state.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#extract_order_from_state/1" data-no-tooltip translate="no">extract_order_from_state(State)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Extracts and deserializes the order from request state.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#serialize_account/1" data-no-tooltip translate="no">serialize_account(Account)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes an ACME account record to a map.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#serialize_challenges/1" data-no-tooltip translate="no">serialize_challenges(Challenges)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes a list of DNS challenge records to maps.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#serialize_order/1" data-no-tooltip translate="no">serialize_order(Order)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes an ACME order record to a map.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#serialize_private_key/1" data-no-tooltip translate="no">serialize_private_key(PrivateKey)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes an RSA private key to PEM format for storage.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#serialize_wallet_private_key/1" data-no-tooltip translate="no">serialize_wallet_private_key(WalletTuple)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Serializes wallet private key components to PEM format for nginx.</p></div>
+
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-signature">
+        <a href="#update_order_in_state/2" data-no-tooltip translate="no">update_order_in_state(State, UpdatedOrder)</a>
+
+      </div>
+
+        <div class="summary-synopsis"><p>Updates the order information in a request state.</p></div>
+
+    </div>
+
+</div>
+
+  </section>
+
+
+  <section id="types" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#types">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Types</span>
+    </h1>
+    <div class="types-list">
+<section class="detail" id="t:acme_account/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_account/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_account()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L80" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_account() :: #acme_account{key :: <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>(), url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(), kid :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>ACME account record containing private key, URL, and key ID.</p>
+  </section>
+</section>
+<section class="detail" id="t:acme_environment/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_environment/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_environment()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L86" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_environment() :: staging | production.</pre>
+
+      </div>
+
+<p>ACME environment type - staging or production.</p>
+  </section>
+</section>
+<section class="detail" id="t:acme_order/0">
+
+  <div class="detail-header">
+    <a href="#t:acme_order/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">acme_order()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L82" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> acme_order() ::
+          #acme_order{url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      status :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      expires :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      identifiers :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:list/0">list</a>(),
+                      authorizations :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:list/0">list</a>(),
+                      finalize :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                      certificate :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>ACME order record containing order details and status.</p>
+  </section>
+</section>
+<section class="detail" id="t:dns_challenge/0">
+
+  <div class="detail-header">
+    <a href="#t:dns_challenge/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">dns_challenge()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L84" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> dns_challenge() ::
+          #dns_challenge{domain :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         token :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         key_authorization :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         dns_value :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>(),
+                         url :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()}.</pre>
+
+      </div>
+
+<p>DNS challenge record for domain validation.</p>
+  </section>
+</section>
+<section class="detail" id="t:domain_list/0">
+
+  <div class="detail-header">
+    <a href="#t:domain_list/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">domain_list()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L88" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> domain_list() :: [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()].</pre>
+
+      </div>
+
+<p>List of domain names as strings.</p>
+  </section>
+</section>
+<section class="detail" id="t:email_address/0">
+
+  <div class="detail-header">
+    <a href="#t:email_address/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">email_address()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L90" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> email_address() :: <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Email address as a string.</p>
+  </section>
+</section>
+<section class="detail" id="t:request_state/0">
+
+  <div class="detail-header">
+    <a href="#t:request_state/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">request_state()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L94" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> request_state() :: #{<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:term/0">term</a>()}.</pre>
+
+      </div>
+
+<p>Request state map with binary keys and arbitrary values.</p>
+  </section>
+</section>
+<section class="detail" id="t:validation_result/0">
+
+  <div class="detail-header">
+    <a href="#t:validation_result/0" class="detail-link" data-no-tooltip aria-label="Link to this type">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">validation_result()</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/include/ssl_cert.hrl#L92" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-type</span> validation_result() :: #{<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>() => <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:binary/0">binary</a>()}.</pre>
+
+      </div>
+
+<p>Validation result map with binary keys and values.</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+  <section id="functions" class="details-list">
+    <h1 class="section-heading">
+      <a class="hover-link" href="#functions">
+        <i class="ri-link-m" aria-hidden="true"></i>
+      </a>
+      <span class="text">Functions</span>
+    </h1>
+    <div class="functions-list">
+<section class="detail" id="create_request_state/4">
+
+  <div class="detail-header">
+    <a href="#create_request_state/4" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">create_request_state(Account, Order, Challenges, ValidatedParams)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L64" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> create_request_state(<a href="#t:acme_account/0">acme_account</a>(), <a href="#t:acme_order/0">acme_order</a>(), [<a href="#t:dns_challenge/0">dns_challenge</a>()], <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> <a href="#t:request_state/0">request_state</a>().</pre>
+
+      </div>
+
+<p>Creates a complete request state map from ACME components.</p><p>This function takes the core ACME components (account, order, challenges)
+and additional parameters to create a comprehensive state map that can
+be stored and later used to continue the certificate request process.</p><p>@param Account The ACME account record
+@param Order The ACME order record
+@param Challenges List of DNS challenge records
+@param ValidatedParams The validated request parameters
+@returns Complete request state map</p>
+  </section>
+</section>
+<section class="detail" id="deserialize_account/1">
+
+  <div class="detail-header">
+    <a href="#deserialize_account/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">deserialize_account(AccountMap)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L96" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> deserialize_account(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> <a href="#t:acme_account/0">acme_account</a>().</pre>
+
+      </div>
+
+<p>Deserializes an account map back to an ACME account record.</p><p>@param AccountMap The serialized account map
+@returns ACME account record</p>
+  </section>
+</section>
+<section class="detail" id="deserialize_challenges/1">
+
+  <div class="detail-header">
+    <a href="#deserialize_challenges/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">deserialize_challenges(ChallengeMaps)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L152" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> deserialize_challenges([<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()]) -> [<a href="#t:dns_challenge/0">dns_challenge</a>()].</pre>
+
+      </div>
+
+<p>Deserializes a list of challenge maps back to DNS challenge records.</p><p>@param ChallengeMaps List of serialized challenge maps
+@returns List of DNS challenge records</p>
+  </section>
+</section>
+<section class="detail" id="deserialize_order/1">
+
+  <div class="detail-header">
+    <a href="#deserialize_order/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">deserialize_order(OrderMap)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L126" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> deserialize_order(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> <a href="#t:acme_order/0">acme_order</a>().</pre>
+
+      </div>
+
+<p>Deserializes an order map back to an ACME order record.</p><p>@param OrderMap The serialized order map
+@returns ACME order record</p>
+  </section>
+</section>
+<section class="detail" id="deserialize_private_key/1">
+
+  <div class="detail-header">
+    <a href="#deserialize_private_key/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">deserialize_private_key(PemKey)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L172" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> deserialize_private_key(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>()) -> <a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>().</pre>
+
+      </div>
+
+<p>Deserializes a PEM-encoded private key back to RSA record.</p><p>@param PemKey The PEM-encoded private key string
+@returns RSA private key record</p>
+  </section>
+</section>
+<section class="detail" id="extract_account_from_state/1">
+
+  <div class="detail-header">
+    <a href="#extract_account_from_state/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">extract_account_from_state(State)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L229" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> extract_account_from_state(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> <a href="#t:acme_account/0">acme_account</a>().</pre>
+
+      </div>
+
+<p>Extracts and deserializes the account from request state.</p><p>@param State The request state map
+@returns ACME account record</p>
+  </section>
+</section>
+<section class="detail" id="extract_challenges_from_state/1">
+
+  <div class="detail-header">
+    <a href="#extract_challenges_from_state/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">extract_challenges_from_state(State)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L249" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> extract_challenges_from_state(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> [<a href="#t:dns_challenge/0">dns_challenge</a>()].</pre>
+
+      </div>
+
+<p>Extracts and deserializes the challenges from request state.</p><p>@param State The request state map
+@returns List of DNS challenge records</p>
+  </section>
+</section>
+<section class="detail" id="extract_order_from_state/1">
+
+  <div class="detail-header">
+    <a href="#extract_order_from_state/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">extract_order_from_state(State)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L239" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> extract_order_from_state(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()) -> <a href="#t:acme_order/0">acme_order</a>().</pre>
+
+      </div>
+
+<p>Extracts and deserializes the order from request state.</p><p>@param State The request state map
+@returns ACME order record</p>
+  </section>
+</section>
+<section class="detail" id="serialize_account/1">
+
+  <div class="detail-header">
+    <a href="#serialize_account/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">serialize_account(Account)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L83" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> serialize_account(<a href="#t:acme_account/0">acme_account</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>().</pre>
+
+      </div>
+
+<p>Serializes an ACME account record to a map.</p><p>@param Account The ACME account record
+@returns Serialized account map</p>
+  </section>
+</section>
+<section class="detail" id="serialize_challenges/1">
+
+  <div class="detail-header">
+    <a href="#serialize_challenges/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">serialize_challenges(Challenges)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L143" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> serialize_challenges([<a href="#t:dns_challenge/0">dns_challenge</a>()]) -> [<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>()].</pre>
+
+      </div>
+
+<p>Serializes a list of DNS challenge records to maps.</p><p>@param Challenges List of DNS challenge records
+@returns List of serialized challenge maps</p>
+  </section>
+</section>
+<section class="detail" id="serialize_order/1">
+
+  <div class="detail-header">
+    <a href="#serialize_order/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">serialize_order(Order)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L109" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> serialize_order(<a href="#t:acme_order/0">acme_order</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>().</pre>
+
+      </div>
+
+<p>Serializes an ACME order record to a map.</p><p>@param Order The ACME order record
+@returns Serialized order map</p>
+  </section>
+</section>
+<section class="detail" id="serialize_private_key/1">
+
+  <div class="detail-header">
+    <a href="#serialize_private_key/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">serialize_private_key(PrivateKey)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L161" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> serialize_private_key(<a href="https://www.erlang.org/doc/apps/public_key/public_key.html#t:private_key/0">public_key:private_key</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Serializes an RSA private key to PEM format for storage.</p><p>@param PrivateKey The RSA private key record
+@returns PEM-encoded private key as string</p>
+  </section>
+</section>
+<section class="detail" id="serialize_wallet_private_key/1">
+
+  <div class="detail-header">
+    <a href="#serialize_wallet_private_key/1" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">serialize_wallet_private_key(WalletTuple)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L188" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> serialize_wallet_private_key(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:tuple/0">tuple</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:string/0">string</a>().</pre>
+
+      </div>
+
+<p>Serializes wallet private key components to PEM format for nginx.</p><p>This function extracts the RSA components from the wallet and creates
+a proper nginx-compatible private key. The key will match the one used
+in CSR generation to ensure certificate compatibility.</p><p>@param WalletTuple The complete wallet tuple containing RSA components
+@returns PEM-encoded private key as string</p>
+  </section>
+</section>
+<section class="detail" id="update_order_in_state/2">
+
+  <div class="detail-header">
+    <a href="#update_order_in_state/2" class="detail-link" data-no-tooltip aria-label="Link to this function">
+      <i class="ri-link-m" aria-hidden="true"></i>
+    </a>
+    <h1 class="signature" translate="no">update_order_in_state(State, UpdatedOrder)</h1>
+
+      <a href="https://github.com/permaweb/ssl_cert/blob/v1.0.0/src/ssl_cert_state.erl#L213" class="icon-action" rel="help" aria-label="View Source">
+       <i class="ri-code-s-slash-line" aria-hidden="true"></i>
+     </a>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <div class="specs">
+
+          <pre translate="no"><span class="attribute">-spec</span> update_order_in_state(<a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>(), <a href="#t:acme_order/0">acme_order</a>()) -> <a href="https://www.erlang.org/doc/apps/erts/erlang.html#t:map/0">map</a>().</pre>
+
+      </div>
+
+<p>Updates the order information in a request state.</p><p>@param State The current request state
+@param UpdatedOrder The updated ACME order record
+@returns Updated request state</p>
+  </section>
+</section>
+
+    </div>
+  </section>
+
+    <footer class="footer">
+      <p>
+
+          <span class="line">
+            <a href="https://hex.pm/packages/ssl_cert/1.0.0" class="footer-hex-package">Hex Package</a>
+
+            <a href="https://preview.hex.pm/preview/ssl_cert/1.0.0">Hex Preview</a>
+
+          </span>
+
+        <span class="line">
+          <button class="a-main footer-button display-quick-switch" title="Search HexDocs packages">
+            Search HexDocs
+          </button>
+
+            <a href="ssl_cert.epub" title="ePub version">
+              Download ePub version
+            </a>
+
+        </span>
+      </p>
+
+      <p class="built-using">
+        Built using
+        <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener" translate="no">ExDoc</a> (v0.35.1) for the
+
+          <a href="https://erlang.org" title="Erlang" target="_blank" translate="no">Erlang programming language</a>
+
+      </p>
+
+    </footer>
+  </div>
+</main>
+</div>
+
+  </body>
+</html>
