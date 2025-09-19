@@ -202,10 +202,10 @@ is_valid_domain(Domain) when is_list(Domain) ->
                 false ->
                     false;
                 true ->
-                    % Basic domain validation regex
+                    % Basic domain validation regex (supports wildcards)
                     DomainRegex =
-                        "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?" ++
-                            "(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)*$",
+                        "^(\\*|[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)" ++
+                            "(\\.[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?)+$",
                     case re:run(Domain, DomainRegex) of
                         {match, _} ->
                             % Additional checks for edge cases
@@ -284,6 +284,9 @@ validate_single_label(Label) ->
         % Empty labels not allowed
         "" ->
             false;
+        % Wildcard label is allowed
+        "*" ->
+            true;
         _ ->
             Length = length(Label),
             % Check length (1-63 characters)
